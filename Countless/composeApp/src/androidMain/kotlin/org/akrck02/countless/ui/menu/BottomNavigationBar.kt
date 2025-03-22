@@ -1,6 +1,8 @@
 package org.akrck02.countless.ui.menu
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -28,10 +30,15 @@ import androidx.compose.ui.unit.em
 import androidx.navigation.compose.rememberNavController
 import countless.composeapp.generated.resources.Res
 import countless.composeapp.generated.resources.account_balance_wallet
+import countless.composeapp.generated.resources.account_balance_wallet_selected
 import countless.composeapp.generated.resources.flag
+import countless.composeapp.generated.resources.flag_selected
 import countless.composeapp.generated.resources.monitoring
+import countless.composeapp.generated.resources.monitoring_selected
 import countless.composeapp.generated.resources.schedule
+import countless.composeapp.generated.resources.schedule_selected
 import org.akrck02.countless.ui.theme.DEFAULT_BOTTOM_BAR_BG
+import org.akrck02.countless.ui.theme.DEFAULT_ROUNDED_SHAPE
 import org.jetbrains.compose.resources.painterResource
 
 //@OptIn(ExperimentalMaterial3Api::class)
@@ -69,29 +76,33 @@ fun BottomNavigationBar() {
                         )
                     )
                 ) {
+                    val statsSelected = navigationSelectedItem == 0
                     BottomNavigationBarOption(
-                        label = "Stats", //stringResource(Res.string.StatsOption),
-                        route = "",
-                        icon = painterResource(Res.drawable.monitoring)
-                    )
+                        label = "Stats", // stringResource(Res.string.StatsOption),
+                        icon = painterResource(Res.drawable.monitoring_selected.takeIf { statsSelected } ?: Res.drawable.monitoring),
+                        selected = statsSelected,
+                    ) { navigationSelectedItem = 0 }
 
+                    val walletSelected = navigationSelectedItem == 1
                     BottomNavigationBarOption(
                         label = "Wallet", //stringResource(Res.string.WalletOption),
-                        route = "",
-                        icon = painterResource(Res.drawable.account_balance_wallet)
-                    )
+                        icon = painterResource(Res.drawable.account_balance_wallet_selected.takeIf { walletSelected } ?: Res.drawable.account_balance_wallet),
+                        selected = walletSelected,
+                    ) { navigationSelectedItem = 1 }
 
+                    val scheduleSelected = navigationSelectedItem == 2
                     BottomNavigationBarOption(
                         label = "Schedule", //stringResource(Res.string.ScheduleOption),
-                        route = "",
-                        icon = painterResource(Res.drawable.schedule)
-                    )
+                        icon = painterResource(Res.drawable.schedule_selected.takeIf { scheduleSelected } ?: Res.drawable.schedule),
+                        selected = scheduleSelected,
+                    ) { navigationSelectedItem = 2 }
 
+                    val goalsSelected = navigationSelectedItem == 3
                     BottomNavigationBarOption(
                         label = "Goals", //stringResource(Res.string.GoalsOption),
-                        route = "",
-                        icon = painterResource(Res.drawable.flag)
-                    )
+                        icon = painterResource(Res.drawable.flag_selected.takeIf { goalsSelected } ?: Res.drawable.flag),
+                        selected = goalsSelected,
+                    ) { navigationSelectedItem = 3 }
                 }
             }
 
@@ -106,17 +117,22 @@ fun BottomNavigationBar() {
 private fun BottomNavigationBarOption(
     label: String = "",
     icon: Painter,
-    route: String = ""
+    selected: Boolean = false,
+    onclick: () -> Unit
 ) {
 
     Surface(
         color = Color.Transparent,
-        modifier = Modifier.size(80.dp),
-        onClick = {}
+        modifier = Modifier
+            .size(80.dp),
+        shape = DEFAULT_ROUNDED_SHAPE,
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.clickable(indication = null, interactionSource = remember { MutableInteractionSource() }) {
+                onclick()
+            }
         ) {
             Image(
                 painter = icon,
@@ -125,6 +141,7 @@ private fun BottomNavigationBarOption(
             )
             Text(
                 text = label,
+                color = Color(0xFFFFFFFF.takeIf { selected } ?: 0xFF505050),
                 fontSize = 3.em
             )
         }
