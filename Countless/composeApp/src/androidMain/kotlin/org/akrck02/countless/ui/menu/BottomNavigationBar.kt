@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import countless.composeapp.generated.resources.Res
 import countless.composeapp.generated.resources.account_balance_wallet
@@ -37,14 +38,25 @@ import countless.composeapp.generated.resources.monitoring
 import countless.composeapp.generated.resources.monitoring_selected
 import countless.composeapp.generated.resources.schedule
 import countless.composeapp.generated.resources.schedule_selected
+import org.akrck02.countless.dal.DataAccessLayer
+import org.akrck02.countless.navigation.route.GoalsRoute
+import org.akrck02.countless.navigation.route.ScheduleRoute
+import org.akrck02.countless.navigation.route.StatsRoute
+import org.akrck02.countless.navigation.route.WalletRoute
+import org.akrck02.countless.navigation.route.navigateSecurely
+import org.akrck02.countless.ui.component.router.goalsRoute
+import org.akrck02.countless.ui.component.router.scheduleRoute
+import org.akrck02.countless.ui.component.router.statsRoute
+import org.akrck02.countless.ui.component.router.walletRoute
 import org.akrck02.countless.ui.theme.DEFAULT_BOTTOM_BAR_BG
 import org.akrck02.countless.ui.theme.DEFAULT_ROUNDED_SHAPE
 import org.jetbrains.compose.resources.painterResource
 
 //@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomNavigationBar() {
-//initializing the default selected item
+fun BottomNavigationBar(dataAccess: DataAccessLayer) {
+
+    //initializing the default selected item
     var navigationSelectedItem by remember {
         mutableIntStateOf(0)
     }
@@ -55,7 +67,7 @@ fun BottomNavigationBar() {
      */
     val navController = rememberNavController()
 
-//scaffold to hold our bottom navigation Bar
+    //scaffold to hold our bottom navigation Bar
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
@@ -81,34 +93,68 @@ fun BottomNavigationBar() {
                         label = "Stats", // stringResource(Res.string.StatsOption),
                         icon = painterResource(Res.drawable.monitoring_selected.takeIf { statsSelected } ?: Res.drawable.monitoring),
                         selected = statsSelected,
-                    ) { navigationSelectedItem = 0 }
+                    ) {
+                        navigationSelectedItem = 0
+                        navController.navigateSecurely(StatsRoute.apply {
+                            dataAccessLayer = dataAccess
+                        })
+                    }
 
                     val walletSelected = navigationSelectedItem == 1
                     BottomNavigationBarOption(
                         label = "Wallet", //stringResource(Res.string.WalletOption),
                         icon = painterResource(Res.drawable.account_balance_wallet_selected.takeIf { walletSelected } ?: Res.drawable.account_balance_wallet),
                         selected = walletSelected,
-                    ) { navigationSelectedItem = 1 }
+                    ) {
+                        navigationSelectedItem = 1
+                        navController.navigateSecurely(WalletRoute.apply {
+                            dataAccessLayer = dataAccess
+                        })
+                    }
 
                     val scheduleSelected = navigationSelectedItem == 2
                     BottomNavigationBarOption(
                         label = "Schedule", //stringResource(Res.string.ScheduleOption),
                         icon = painterResource(Res.drawable.schedule_selected.takeIf { scheduleSelected } ?: Res.drawable.schedule),
                         selected = scheduleSelected,
-                    ) { navigationSelectedItem = 2 }
+                    ) {
+                        navigationSelectedItem = 2
+                        navController.navigateSecurely(ScheduleRoute.apply {
+                            dataAccessLayer = dataAccess
+                        })
+                    }
 
                     val goalsSelected = navigationSelectedItem == 3
                     BottomNavigationBarOption(
                         label = "Goals", //stringResource(Res.string.GoalsOption),
                         icon = painterResource(Res.drawable.flag_selected.takeIf { goalsSelected } ?: Res.drawable.flag),
                         selected = goalsSelected,
-                    ) { navigationSelectedItem = 3 }
+                    ) {
+                        navigationSelectedItem = 3
+                        navController.navigateSecurely(GoalsRoute.apply {
+                            dataAccessLayer = dataAccess
+                        })
+                    }
                 }
             }
-
         }
     ) { _ ->
-        //We need to setup our NavHost in here
+
+        NavHost(
+            navController = navController,
+            startDestination = StatsRoute,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(0.dp)
+        ) {
+
+            statsRoute(navController)
+            walletRoute(navController)
+            scheduleRoute(navController)
+            goalsRoute(navController)
+
+        }
+
     }
 }
 
