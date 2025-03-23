@@ -9,8 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import org.akrck02.countless.biometric.AuthenticateWithBiometrics
-import org.akrck02.countless.dal.DataAccessLayer
+import org.akrck02.countless.system.biometric.AuthenticateWithBiometrics
 import org.akrck02.countless.ui.menu.BottomNavigationBar
 import org.akrck02.countless.ui.theme.getSystemThemeColors
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -18,7 +17,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @RequiresApi(Build.VERSION_CODES.R)
 @Composable
 @Preview
-fun App(dataAccess: DataAccessLayer) {
+fun App() {
 
     var authenticated by remember { mutableStateOf(false) }
     AuthenticateWithBiometrics(
@@ -30,7 +29,9 @@ fun App(dataAccess: DataAccessLayer) {
         colors = getSystemThemeColors(),
         shapes = MaterialTheme.shapes
     ) {
-        Scaffold { _ ->
+        Scaffold { contentPadding ->
+
+            contentPadding.toString()
 
             if (authenticated.not()) {
                 AuthenticateWithBiometrics(
@@ -40,7 +41,7 @@ fun App(dataAccess: DataAccessLayer) {
                 return@Scaffold
             }
 
-            BottomNavigationBar(dataAccess)
+            BottomNavigationBar()
 
         }
     }

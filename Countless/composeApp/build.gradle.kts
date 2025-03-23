@@ -1,3 +1,6 @@
+@file:OptIn(ExperimentalKotlinGradlePluginApi::class)
+
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -5,8 +8,9 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
     kotlin("plugin.serialization") version "2.0.20"
-    alias(libs.plugins.sqlDelight)
 }
 
 kotlin {
@@ -31,7 +35,8 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.graphics.shapes)
             implementation(libs.androidx.biometric)
-            implementation(libs.sqldelight.android)
+            implementation(libs.koin.androidx.compose)
+            implementation(libs.koin.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -48,7 +53,14 @@ kotlin {
 
             // serialization
             implementation(libs.kotlinx.serialization.json)
-            implementation(libs.sqldelight.coroutines)
+
+            // koin
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
+
+            // room
+            implementation(libs.room.runtime)
+            implementation(libs.sqlite.bundled)
         }
     }
 }
@@ -82,12 +94,11 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+
+    // KSP support for Room Compiler.
+    add("kspAndroid", libs.room.compiler)
 }
 
-sqldelight {
-    databases {
-        create("Countless") {
-            packageName.set("org.akrck02.countless")
-        }
-    }
+room {
+    schemaDirectory("$projectDir/schemas")
 }

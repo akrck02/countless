@@ -38,23 +38,22 @@ import countless.composeapp.generated.resources.monitoring
 import countless.composeapp.generated.resources.monitoring_selected
 import countless.composeapp.generated.resources.schedule
 import countless.composeapp.generated.resources.schedule_selected
-import org.akrck02.countless.dal.DataAccessLayer
-import org.akrck02.countless.navigation.route.GoalsRoute
-import org.akrck02.countless.navigation.route.ScheduleRoute
-import org.akrck02.countless.navigation.route.StatsRoute
-import org.akrck02.countless.navigation.route.WalletRoute
-import org.akrck02.countless.navigation.route.navigateSecurely
-import org.akrck02.countless.ui.component.router.goalsRoute
-import org.akrck02.countless.ui.component.router.scheduleRoute
-import org.akrck02.countless.ui.component.router.statsRoute
-import org.akrck02.countless.ui.component.router.walletRoute
+import org.akrck02.countless.ui.navigation.GoalsRoute
+import org.akrck02.countless.ui.navigation.ScheduleRoute
+import org.akrck02.countless.ui.navigation.StatsRoute
+import org.akrck02.countless.ui.navigation.WalletRoute
+import org.akrck02.countless.ui.navigation.goalsRoute
+import org.akrck02.countless.ui.navigation.navigateSecurely
+import org.akrck02.countless.ui.navigation.scheduleRoute
+import org.akrck02.countless.ui.navigation.statsRoute
+import org.akrck02.countless.ui.navigation.walletRoute
 import org.akrck02.countless.ui.theme.DEFAULT_BOTTOM_BAR_BG
 import org.akrck02.countless.ui.theme.DEFAULT_ROUNDED_SHAPE
 import org.jetbrains.compose.resources.painterResource
 
 //@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomNavigationBar(dataAccess: DataAccessLayer) {
+fun BottomNavigationBar() {
 
     //initializing the default selected item
     var navigationSelectedItem by remember {
@@ -96,7 +95,7 @@ fun BottomNavigationBar(dataAccess: DataAccessLayer) {
                     ) {
                         navigationSelectedItem = 0
                         navController.navigateSecurely(StatsRoute.apply {
-                            dataAccessLayer = dataAccess
+
                         })
                     }
 
@@ -108,7 +107,7 @@ fun BottomNavigationBar(dataAccess: DataAccessLayer) {
                     ) {
                         navigationSelectedItem = 1
                         navController.navigateSecurely(WalletRoute.apply {
-                            dataAccessLayer = dataAccess
+
                         })
                     }
 
@@ -120,7 +119,7 @@ fun BottomNavigationBar(dataAccess: DataAccessLayer) {
                     ) {
                         navigationSelectedItem = 2
                         navController.navigateSecurely(ScheduleRoute.apply {
-                            dataAccessLayer = dataAccess
+
                         })
                     }
 
@@ -132,7 +131,7 @@ fun BottomNavigationBar(dataAccess: DataAccessLayer) {
                     ) {
                         navigationSelectedItem = 3
                         navController.navigateSecurely(GoalsRoute.apply {
-                            dataAccessLayer = dataAccess
+
                         })
                     }
                 }
