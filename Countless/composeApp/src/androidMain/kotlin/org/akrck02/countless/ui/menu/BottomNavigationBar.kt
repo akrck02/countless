@@ -16,9 +16,9 @@ import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Autorenew
 import androidx.compose.material.icons.rounded.BarChart
-import androidx.compose.material.icons.rounded.Euro
 import androidx.compose.material.icons.rounded.Flag
 import androidx.compose.material.icons.rounded.Schedule
+import androidx.compose.material.icons.rounded.Wallet
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -102,7 +102,7 @@ fun BottomNavigationBar(appViewModel: AppViewModel) {
                     val walletSelected = navigationSelectedItem == 1
                     BottomNavigationBarOption(
                         label = "Wallet", //stringResource(Res.string.WalletOption),
-                        icon = Icons.Rounded.Euro,
+                        icon = Icons.Rounded.Wallet,
                         selected = walletSelected,
                     ) {
                         navigationSelectedItem = 1
