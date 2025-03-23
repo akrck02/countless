@@ -9,6 +9,7 @@ import org.akrck02.countless.data.repository.AccountRepository
 import org.akrck02.countless.data.repository.FinancialGoalRepository
 import org.akrck02.countless.data.repository.ScheduleRepository
 import org.akrck02.countless.data.repository.TransactionRepository
+import org.akrck02.countless.viewmodel.AppViewModel
 import org.akrck02.countless.viewmodel.GoalsViewModel
 import org.akrck02.countless.viewmodel.ScheduleViewModel
 import org.akrck02.countless.viewmodel.StatsViewModel
@@ -32,6 +33,10 @@ fun getDatabaseBuilder(ctx: Context): RoomDatabase.Builder<AppDatabase> {
         context = appContext,
         name = dbFile.absolutePath
     )
+}
+
+fun fillDatabaseIfNeeded() {
+
 }
 
 fun initKoin(config: KoinAppDeclaration? = null) = startKoin {
@@ -63,6 +68,7 @@ val provideDatabaseModule = module {
 
 // Add viewmodel classes here to be loaded inside the database module.
 val appModule = module {
+    viewModelOf(::AppViewModel)
     viewModelOf(::StatsViewModel)
     viewModelOf(::WalletViewModel)
     viewModelOf(::ScheduleViewModel)

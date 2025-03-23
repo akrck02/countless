@@ -1,8 +1,8 @@
 [versions]
 agp = "8.9.0"
-android-compileSdk = "34"
+android-compileSdk = "35"
 android-minSdk = "24"
-android-targetSdk = "34"
+android-targetSdk = "35"
 androidx-activityCompose = "1.9.3"
 androidx-lifecycle = "2.8.4"
 biometric = "1.2.0-alpha05"
@@ -10,6 +10,7 @@ compose-multiplatform = "1.7.0"
 graphicsShapes = "1.0.1"
 kotlin = "2.1.20"
 kotlinxSerializationJson = "1.8.0"
+material3 = "1.4.0-alpha10"
 navigationCompose = "2.8.0-alpha10"
 koin-bom = "4.0.0"
 room = "2.7.0-rc02"
@@ -23,6 +24,7 @@ androidx-graphics-shapes = { module = "androidx.graphics:graphics-shapes", versi
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+androidx-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 

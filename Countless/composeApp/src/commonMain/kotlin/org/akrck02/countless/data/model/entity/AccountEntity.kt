@@ -9,6 +9,7 @@ import java.util.UUID
 @Entity(tableName = "account")
 data class AccountEntity(
     @PrimaryKey(autoGenerate = true) var id: Int? = null,
+    @ColumnInfo(name = "name") var name: String? = null,
     @ColumnInfo(name = "sync_service_external_uuid") var syncServiceExternalUuid: UUID? = null, // UUID for external sync service
 )
 

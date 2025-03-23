@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import kotlinx.serialization.Serializable
 import org.akrck02.countless.data.model.option.Direction
+import org.akrck02.countless.viewmodel.AppViewModel
 import java.util.Objects
 
 class Routes
@@ -18,16 +19,24 @@ var current: Route? = null
 
 // ROUTES
 @Serializable
-data object StatsRoute : Route()
+data object StatsRoute : Route() {
+    lateinit var appViewModel: AppViewModel
+}
 
 @Serializable
-data object WalletRoute : Route()
+data object WalletRoute : Route() {
+    lateinit var appViewModel: AppViewModel
+}
 
 @Serializable
-data object ScheduleRoute : Route()
+data object ScheduleRoute : Route() {
+    lateinit var appViewModel: AppViewModel
+}
 
 @Serializable
-data object GoalsRoute : Route()
+data object GoalsRoute : Route() {
+    lateinit var appViewModel: AppViewModel
+}
 
 val availableRoutes = listOf(StatsRoute.getRoutePackageName(), WalletRoute.getRoutePackageName(), ScheduleRoute.getRoutePackageName(), GoalsRoute.getRoutePackageName())
 

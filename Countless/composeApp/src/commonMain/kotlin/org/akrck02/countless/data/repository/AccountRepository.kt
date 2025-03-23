@@ -15,9 +15,9 @@ class AccountRepository(
     private val accountDao: AccountDao
 ) {
 
-    suspend fun find(accountId: Int): Account {
+    suspend fun find(accountId: Int): Account? {
         accountId.assertPositive(ACCOUNT_ID)
-        return accountDao.find(accountId).toModel()
+        return accountDao.find(accountId)?.toModel()
     }
 
     suspend fun update(account: Account) {

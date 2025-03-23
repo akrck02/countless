@@ -1,6 +1,5 @@
 package org.akrck02.countless.ui.menu
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -13,9 +12,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Autorenew
+import androidx.compose.material.icons.rounded.BarChart
+import androidx.compose.material.icons.rounded.Euro
+import androidx.compose.material.icons.rounded.Flag
+import androidx.compose.material.icons.rounded.Schedule
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -24,20 +31,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import countless.composeapp.generated.resources.Res
-import countless.composeapp.generated.resources.account_balance_wallet
-import countless.composeapp.generated.resources.account_balance_wallet_selected
-import countless.composeapp.generated.resources.flag
-import countless.composeapp.generated.resources.flag_selected
-import countless.composeapp.generated.resources.monitoring
-import countless.composeapp.generated.resources.monitoring_selected
-import countless.composeapp.generated.resources.schedule
-import countless.composeapp.generated.resources.schedule_selected
+import org.akrck02.countless.ui.extension.modify
 import org.akrck02.countless.ui.navigation.GoalsRoute
 import org.akrck02.countless.ui.navigation.ScheduleRoute
 import org.akrck02.countless.ui.navigation.StatsRoute
@@ -47,13 +46,12 @@ import org.akrck02.countless.ui.navigation.navigateSecurely
 import org.akrck02.countless.ui.navigation.scheduleRoute
 import org.akrck02.countless.ui.navigation.statsRoute
 import org.akrck02.countless.ui.navigation.walletRoute
-import org.akrck02.countless.ui.theme.DEFAULT_BOTTOM_BAR_BG
 import org.akrck02.countless.ui.theme.DEFAULT_ROUNDED_SHAPE
-import org.jetbrains.compose.resources.painterResource
+import org.akrck02.countless.viewmodel.AppViewModel
 
 //@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomNavigationBar() {
+fun BottomNavigationBar(appViewModel: AppViewModel) {
 
     //initializing the default selected item
     var navigationSelectedItem by remember {
@@ -69,69 +67,71 @@ fun BottomNavigationBar() {
     //scaffold to hold our bottom navigation Bar
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        containerColor = MaterialTheme.colorScheme.background,
         bottomBar = {
 
             Surface(
-                color = DEFAULT_BOTTOM_BAR_BG,
-                contentColor = Color(0xFF505050),
+                color = MaterialTheme.colorScheme.surfaceContainerLow,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(80.dp)
+                    .height(100.dp)
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.padding(
                         PaddingValues(
-                            horizontal = 10.dp
+                            start = 10.dp,
+                            end = 10.dp,
+                            bottom = 20.dp
                         )
                     )
                 ) {
                     val statsSelected = navigationSelectedItem == 0
                     BottomNavigationBarOption(
                         label = "Stats", // stringResource(Res.string.StatsOption),
-                        icon = painterResource(Res.drawable.monitoring_selected.takeIf { statsSelected } ?: Res.drawable.monitoring),
+                        icon = Icons.Rounded.BarChart,
                         selected = statsSelected,
                     ) {
                         navigationSelectedItem = 0
                         navController.navigateSecurely(StatsRoute.apply {
-
+                            this.appViewModel = appViewModel
                         })
                     }
 
                     val walletSelected = navigationSelectedItem == 1
                     BottomNavigationBarOption(
                         label = "Wallet", //stringResource(Res.string.WalletOption),
-                        icon = painterResource(Res.drawable.account_balance_wallet_selected.takeIf { walletSelected } ?: Res.drawable.account_balance_wallet),
+                        icon = Icons.Rounded.Euro,
                         selected = walletSelected,
                     ) {
                         navigationSelectedItem = 1
                         navController.navigateSecurely(WalletRoute.apply {
-
+                            this.appViewModel = appViewModel
                         })
                     }
 
                     val scheduleSelected = navigationSelectedItem == 2
                     BottomNavigationBarOption(
                         label = "Schedule", //stringResource(Res.string.ScheduleOption),
-                        icon = painterResource(Res.drawable.schedule_selected.takeIf { scheduleSelected } ?: Res.drawable.schedule),
+                        icon = Icons.Rounded.Schedule,
                         selected = scheduleSelected,
                     ) {
                         navigationSelectedItem = 2
                         navController.navigateSecurely(ScheduleRoute.apply {
-
+                            this.appViewModel = appViewModel
                         })
                     }
 
                     val goalsSelected = navigationSelectedItem == 3
                     BottomNavigationBarOption(
                         label = "Goals", //stringResource(Res.string.GoalsOption),
-                        icon = painterResource(Res.drawable.flag_selected.takeIf { goalsSelected } ?: Res.drawable.flag),
+                        icon = Icons.Rounded.Flag,
                         selected = goalsSelected,
                     ) {
                         navigationSelectedItem = 3
                         navController.navigateSecurely(GoalsRoute.apply {
-
+                            this.appViewModel = appViewModel
                         })
                     }
                 }
@@ -161,8 +161,8 @@ fun BottomNavigationBar() {
 @Composable
 private fun BottomNavigationBarOption(
     label: String = "",
-    icon: Painter,
     selected: Boolean = false,
+    icon: ImageVector = Icons.Rounded.Autorenew,
     onclick: () -> Unit
 ) {
 
@@ -171,7 +171,8 @@ private fun BottomNavigationBarOption(
         modifier = Modifier
             .size(80.dp),
         shape = DEFAULT_ROUNDED_SHAPE,
-    ) {
+
+        ) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -179,14 +180,14 @@ private fun BottomNavigationBarOption(
                 onclick()
             }
         ) {
-            Image(
-                painter = icon,
-                contentDescription = "",
-                modifier = Modifier.size(25.dp)
+            Icon(
+                imageVector = icon,
+                tint = MaterialTheme.colorScheme.primary.takeIf { selected } ?: MaterialTheme.colorScheme.onSurface.modify(.4f),
+                contentDescription = label
             )
             Text(
                 text = label,
-                color = Color(0xFFFFFFFF.takeIf { selected } ?: 0xFF505050),
+                color = MaterialTheme.colorScheme.primary.takeIf { selected } ?: MaterialTheme.colorScheme.onSurface.modify(.4f),
                 fontSize = 3.em
             )
         }

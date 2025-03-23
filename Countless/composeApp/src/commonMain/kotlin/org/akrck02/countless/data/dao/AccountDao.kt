@@ -11,7 +11,7 @@ import org.akrck02.countless.data.model.entity.AccountEntity
 interface AccountDao {
 
     @Query("SELECT * FROM account WHERE id = :accountId")
-    suspend fun find(accountId: Int): AccountEntity
+    suspend fun find(accountId: Int): AccountEntity?
 
     @Update
     suspend fun update(accountEntity: AccountEntity)

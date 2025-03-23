@@ -11,8 +11,10 @@ import org.akrck02.countless.module.appModule
 import org.akrck02.countless.module.initKoin
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
+import org.koin.compose.KoinContext
+import org.koin.core.component.KoinComponent
 
-class MainActivity : FragmentActivity() {
+class MainActivity : FragmentActivity(), KoinComponent {
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,11 +25,10 @@ class MainActivity : FragmentActivity() {
         }
 
         setContent {
-
-            App()
+            KoinContext {
+                App()
+            }
         }
-
-
     }
 }
 

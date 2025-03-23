@@ -37,6 +37,8 @@ kotlin {
             implementation(libs.androidx.biometric)
             implementation(libs.koin.androidx.compose)
             implementation(libs.koin.android)
+            implementation(libs.androidx.material3)
+            implementation(compose.materialIconsExtended)
         }
         commonMain.dependencies {
             implementation(compose.runtime)

@@ -4,5 +4,6 @@ import java.util.UUID
 
 data class Account(
     var id: Int? = null,
+    var name: String? = null,
     var syncServiceExternalUuid: UUID? = null, // UUID for external sync service
 )

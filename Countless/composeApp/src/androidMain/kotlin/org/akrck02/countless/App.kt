@@ -2,8 +2,8 @@ package org.akrck02.countless
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -12,12 +12,14 @@ import androidx.compose.runtime.setValue
 import org.akrck02.countless.system.biometric.AuthenticateWithBiometrics
 import org.akrck02.countless.ui.menu.BottomNavigationBar
 import org.akrck02.countless.ui.theme.getSystemThemeColors
+import org.akrck02.countless.viewmodel.AppViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.androidx.compose.koinViewModel
 
 @RequiresApi(Build.VERSION_CODES.R)
 @Composable
 @Preview
-fun App() {
+fun App(appViewModel: AppViewModel = koinViewModel()) {
 
     var authenticated by remember { mutableStateOf(false) }
     AuthenticateWithBiometrics(
@@ -26,10 +28,12 @@ fun App() {
     )
 
     MaterialTheme(
-        colors = getSystemThemeColors(),
+        colorScheme = getSystemThemeColors(),
         shapes = MaterialTheme.shapes
     ) {
-        Scaffold { contentPadding ->
+        Scaffold(
+            containerColor = MaterialTheme.colorScheme.surface
+        ) { contentPadding ->
 
             contentPadding.toString()
 
@@ -41,7 +45,7 @@ fun App() {
                 return@Scaffold
             }
 
-            BottomNavigationBar()
+            BottomNavigationBar(appViewModel)
 
         }
     }
