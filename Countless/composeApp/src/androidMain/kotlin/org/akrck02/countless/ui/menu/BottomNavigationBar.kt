@@ -36,6 +36,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import countless.composeapp.generated.resources.Res
+import countless.composeapp.generated.resources.goals_option
+import countless.composeapp.generated.resources.schedule_option
+import countless.composeapp.generated.resources.stats_option
+import countless.composeapp.generated.resources.wallet_option
 import org.akrck02.countless.ui.extension.modify
 import org.akrck02.countless.ui.navigation.GoalsRoute
 import org.akrck02.countless.ui.navigation.ScheduleRoute
@@ -48,6 +53,7 @@ import org.akrck02.countless.ui.navigation.statsRoute
 import org.akrck02.countless.ui.navigation.walletRoute
 import org.akrck02.countless.ui.theme.DEFAULT_ROUNDED_SHAPE
 import org.akrck02.countless.viewmodel.AppViewModel
+import org.jetbrains.compose.resources.stringResource
 
 //@OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -89,7 +95,7 @@ fun BottomNavigationBar(appViewModel: AppViewModel) {
                 ) {
                     val statsSelected = navigationSelectedItem == 0
                     BottomNavigationBarOption(
-                        label = "Stats", // stringResource(Res.string.StatsOption),
+                        label = stringResource(Res.string.stats_option),
                         icon = Icons.Rounded.BarChart,
                         selected = statsSelected,
                     ) {
@@ -101,7 +107,7 @@ fun BottomNavigationBar(appViewModel: AppViewModel) {
 
                     val walletSelected = navigationSelectedItem == 1
                     BottomNavigationBarOption(
-                        label = "Wallet", //stringResource(Res.string.WalletOption),
+                        label = stringResource(Res.string.wallet_option),
                         icon = Icons.Rounded.Wallet,
                         selected = walletSelected,
                     ) {
@@ -113,7 +119,7 @@ fun BottomNavigationBar(appViewModel: AppViewModel) {
 
                     val scheduleSelected = navigationSelectedItem == 2
                     BottomNavigationBarOption(
-                        label = "Schedule", //stringResource(Res.string.ScheduleOption),
+                        label = stringResource(Res.string.schedule_option),
                         icon = Icons.Rounded.Schedule,
                         selected = scheduleSelected,
                     ) {
@@ -125,7 +131,7 @@ fun BottomNavigationBar(appViewModel: AppViewModel) {
 
                     val goalsSelected = navigationSelectedItem == 3
                     BottomNavigationBarOption(
-                        label = "Goals", //stringResource(Res.string.GoalsOption),
+                        label = stringResource(Res.string.goals_option),
                         icon = Icons.Rounded.Flag,
                         selected = goalsSelected,
                     ) {

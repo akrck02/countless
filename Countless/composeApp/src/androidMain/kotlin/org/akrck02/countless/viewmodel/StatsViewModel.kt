@@ -19,15 +19,6 @@ class StatsViewModel(
         estimatedTimestamp = System.currentTimeMillis()
     })
 
-    fun getCurrentProgress(): Double {
-        var initial = currentFinancialGoal.currentValue
-        var target = currentFinancialGoal.targetValue
-
-        if (target == 0.0) return 0.0
-
-        return initial / target
-    }
-
     fun getBudgetDifference(): Double {
         return 5123.00
     }

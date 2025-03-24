@@ -45,6 +45,7 @@ var bottomBar = Color(0xFF505050)
 val DEFAULT_BOTTOM_BAR_BG = Color(18, 18, 18)
 
 val DEFAULT_ROUNDED_SHAPE = RoundedCornerShape(20)
+val MEDIUM_ROUNDED_SHAPE = RoundedCornerShape(20.dp)
 val MIN_ROUNDED_SHAPE = RoundedCornerShape(10.dp)
 val TOTAL_ROUNDED_SHAPE = RoundedCornerShape(100)
 

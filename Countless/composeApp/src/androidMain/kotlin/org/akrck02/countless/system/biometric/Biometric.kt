@@ -1,30 +1,27 @@
 package org.akrck02.countless.system.biometric
 
+import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.biometric.BiometricPrompt.PromptInfo
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 
 
-@Composable
 @RequiresApi(Build.VERSION_CODES.R)
-fun AuthenticateWithBiometrics(
+fun authenticateWithBiometrics(
+    context: Context,
     onError: () -> Unit,
     onSuccess: () -> Unit
 ) {
 
-    val context = LocalContext.current
-    val biometricManager = remember { BiometricManager.from(context) }
-    val isBiometricAvailable = remember {
-        biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)
-    }
+
+    val biometricManager = BiometricManager.from(context)
+    val isBiometricAvailable = biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)
+
 
     when (isBiometricAvailable) {
         BiometricManager.BIOMETRIC_SUCCESS -> {
@@ -68,13 +65,13 @@ fun AuthenticateWithBiometrics(
         }
     }
 
-    val executor = remember { ContextCompat.getMainExecutor(context) }
+    val executor = ContextCompat.getMainExecutor(context)
 
     // Lets the user authenticate using either a Class 3 biometric or
     // their lock screen credential (PIN, pattern, or password).
     val promptInfo: PromptInfo = PromptInfo.Builder()
-        .setTitle("Log in to countless")
-        .setSubtitle("Log in using your biometric credential")
+        .setTitle("Entering countless app.")
+        .setSubtitle("Please enter your fingerprint to access.")
         .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)
         .build()
 

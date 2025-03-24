@@ -1,29 +1,32 @@
 package org.akrck02.countless.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import org.akrck02.countless.data.model.data.FinancialGoal
+import org.akrck02.countless.data.repository.FinancialGoalRepository
+import java.util.UUID
+import kotlin.random.Random
 
-class GoalsViewModel : ViewModel() {
+class GoalsViewModel(private val financialGoalRepository: FinancialGoalRepository) : ViewModel() {
 
-    var timer by mutableIntStateOf(0)
-        private set
-
-    init {
-        startTimer()
+    var financialGoal: FinancialGoal? = FinancialGoal().apply {
+        name = "Buy a new house \uD83C\uDFE1"
+        targetValue = 65000.00
+        currentValue = 15324.28
+        monthSavings = 900.00
+        monthSpendLimit = 300.00
     }
 
-    private fun startTimer() {
-        viewModelScope.launch {
-            while (true) {
-                delay(1000)
-                timer = timer + 1
-            }
+    fun mock(): FinancialGoal {
+
+        val target = Random.nextDouble(100.0, 65000.0)
+        val current = target - Random.nextDouble(0.0, target)
+
+        return FinancialGoal().apply {
+            name = UUID.randomUUID().toString()
+            targetValue = target
+            currentValue = current
         }
+
     }
 
 }

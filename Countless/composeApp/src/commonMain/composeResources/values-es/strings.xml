@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Countless</string>
+    <string name="stats_option">Estadisticas</string>
+    <string name="wallet_option">Cartera</string>
+    <string name="schedule_option">Programación</string>
+    <string name="goals_option">Objetivos</string>
+    <string name="year_selector_option">Año</string>
+    <string name="month_selector_option">Mes</string>
+    <string name="schedule_title">Programación</string>
+    <string name="financial_goals_title">Objetivos financieros</string>
+    <string name="income_title">Ingresos</string>
+    <string name="outcome_title">Gastos</string>
+
+    <!-- BLOCK VIEW -->
+    <string name="fingerprint_message">Introduzca su huella dactilar para acceder.</string>
+
+    <!-- STATS_VIEW -->
+    <string name="stats_savings_title">Has ahorrado</string>
+    <string name="stats_savings_objective_title_template">de %1$s</string>
+    <string name="stats_ahead_of_budget_template">%1$s por encima del presupuesto.</string>
+    <string name="stats_behind_of_budget_template">%1$s por debajo del presupuesto.</string>
+    <string name="stats_spend_more_template">Puedes gastar %1$s mas este mes.</string>
+
+    <!-- FINANCIAL GOALS VIEW -->
+    <string name="financial_goal_current_goal">Objetivo actual</string>
+    <string name="financial_goal_progress_template">Progreso  - %1$s</string>
+    <string name="financial_goal_progress_text_template">%1$s de %2$s</string>
+    <string name="financial_goal_estimated_time_template">Tiempo estimado: %1$s</string>
+    <string name="financial_goal_month_limit">Limite mensual</string>
+    <string name="financial_goal_estimated_saving">Ahorro mensual estimado</string>
+
+    <!-- WALLET VIEW -->
+    <string name="wallet_transaction_type_all">Todos</string>
+    <string name="wallet_transaction_type_savings">Ingresos</string>
+    <string name="wallet_transaction_type_expenses">Gastos</string>
+</resources>

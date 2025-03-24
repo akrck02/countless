@@ -28,11 +28,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavHostController
+import countless.composeapp.generated.resources.Res
+import countless.composeapp.generated.resources.stats_ahead_of_budget_template
+import countless.composeapp.generated.resources.stats_savings_objective_title_template
+import countless.composeapp.generated.resources.stats_savings_title
+import countless.composeapp.generated.resources.stats_spend_more_template
 import org.akrck02.countless.data.extension.asDate
 import org.akrck02.countless.data.extension.defaultDigitFormat
+import org.akrck02.countless.data.model.data.getCurrentProgress
 import org.akrck02.countless.ui.extension.modify
 import org.akrck02.countless.ui.theme.TOTAL_ROUNDED_SHAPE
 import org.akrck02.countless.viewmodel.StatsViewModel
+import org.jetbrains.compose.resources.stringResource
 import org.koin.androidx.compose.koinViewModel
 import kotlin.math.abs
 
@@ -55,12 +62,11 @@ fun StatsView(
             )
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         )
         {
             Text(
-                text = "Savings so far",
+                text = stringResource(Res.string.stats_savings_title),
                 fontSize = 8.em,
                 fontWeight = FontWeight.W500,
                 textAlign = TextAlign.Center,
@@ -81,7 +87,7 @@ fun StatsView(
                     .padding(bottom = 10.dp)
             )
             Text(
-                text = "of ${viewModel.currentFinancialGoal.targetValue.defaultDigitFormat()}€",
+                text = stringResource(Res.string.stats_savings_objective_title_template, "${viewModel.currentFinancialGoal.targetValue.defaultDigitFormat()}€"),
                 fontSize = 8.em,
                 fontWeight = FontWeight.W500,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.modify(.5f),
@@ -109,12 +115,13 @@ fun StatsView(
             )
 
             LaunchedEffect(LocalLifecycleOwner.current) {
-                progress = viewModel.getCurrentProgress().toFloat()
+                progress = viewModel.currentFinancialGoal.getCurrentProgress().toFloat()
             }
 
             val budgetDifference = viewModel.getBudgetDifference()
             Text(
-                text = if (budgetDifference > 0.0) "${budgetDifference.defaultDigitFormat()}€ ahead of budget." else "${abs(budgetDifference).defaultDigitFormat()}€ behind budget.",
+                text = if (budgetDifference > 0.0) stringResource(Res.string.stats_ahead_of_budget_template, "${budgetDifference.defaultDigitFormat()}€")
+                else stringResource(Res.string.stats_ahead_of_budget_template, "${abs(budgetDifference).defaultDigitFormat()}€"),
                 fontSize = 3.em,
                 fontWeight = FontWeight.Normal,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.modify(.5f),
@@ -125,8 +132,9 @@ fun StatsView(
             )
 
             val budgetExcess = viewModel.getMonthBudgetExcess()
+
             Text(
-                text = if (budgetExcess > 0.0) "You can spend ${budgetExcess.defaultDigitFormat()}€ more this month." else "",
+                text = if (budgetExcess > 0.0) stringResource(Res.string.stats_spend_more_template, "${budgetExcess.defaultDigitFormat()}€") else "",
                 fontSize = 4.em,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center,
