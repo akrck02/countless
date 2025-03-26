@@ -19,7 +19,7 @@ import org.akrck02.countless.data.model.data.FinancialGoal
 )
 data class FinancialGoalEntity(
     @PrimaryKey(autoGenerate = true) var id: Int? = null,
-    @ColumnInfo(name = "account_id") var accountId: Int? = null,
+    @ColumnInfo(name = "account_id", index = true) var accountId: Int? = null,
     @ColumnInfo(name = "name") var name: String? = null,
     @ColumnInfo(name = "target_value") var targetValue: Double = 0.0,
     @ColumnInfo(name = "current_value") var currentValue: Double = 0.0,

@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package org.akrck02.countless.data.dao
 
 import androidx.room.Dao
@@ -5,7 +7,6 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import org.akrck02.countless.data.model.entity.AccountEntity
 import org.akrck02.countless.data.model.entity.FinancialGoalEntity
 
 @Dao
@@ -21,9 +22,9 @@ interface FinancialGoalDao {
     suspend fun update(financialGoalEntity: FinancialGoalEntity)
 
     @Insert
-    suspend fun create(accountEntity: AccountEntity)
+    suspend fun create(financialGoal: FinancialGoalEntity)
 
     @Delete
-    suspend fun kill(accountEntity: AccountEntity)
+    suspend fun kill(financialGoal: FinancialGoalEntity)
 
 }

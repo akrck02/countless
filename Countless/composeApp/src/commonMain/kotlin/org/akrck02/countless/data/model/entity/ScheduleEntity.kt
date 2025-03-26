@@ -20,7 +20,7 @@ import org.akrck02.countless.data.model.option.ScheduleType
 )
 data class ScheduleEntity(
     @PrimaryKey(autoGenerate = true) var id: Int? = null,
-    @ColumnInfo(name = "account_id") var accountId: Int? = null,
+    @ColumnInfo(name = "account_id", index = true) var accountId: Int? = null,
     @ColumnInfo(name = "name") var name: String? = null,
     @ColumnInfo(name = "type") var type: ScheduleType = ScheduleType.UNKNOWN,
     @ColumnInfo(name = "start_timestamp") var startTimestamp: Long? = null,

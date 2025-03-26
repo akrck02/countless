@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 2,
-    "identityHash": "ad0c8de142bc7036eb8131b780088bac",
+    "version": 3,
+    "identityHash": "5ea39ce1eda5b93d3d89ad375c575270",
     "entities": [
       {
         "tableName": "account",
@@ -118,12 +118,13 @@
       },
       {
         "tableName": "financial_goal_track_record",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `financial_goal_id` INTEGER, `target_value` REAL NOT NULL, `current_value` REAL NOT NULL, `target_timestamp` INTEGER, `estimated_timestamp` INTEGER, `insert_timestamp` INTEGER, FOREIGN KEY(`financial_goal_id`) REFERENCES `financial_goal`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `financial_goal_id` INTEGER, `target_value` REAL NOT NULL DEFAULT 0, `current_value` REAL NOT NULL DEFAULT 0, `target_timestamp` INTEGER, `estimated_timestamp` INTEGER, `insert_timestamp` INTEGER, FOREIGN KEY(`financial_goal_id`) REFERENCES `financial_goal`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "financialGoalId",
@@ -134,13 +135,15 @@
             "fieldPath": "targetValue",
             "columnName": "target_value",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           },
           {
             "fieldPath": "currentValue",
             "columnName": "current_value",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           },
           {
             "fieldPath": "targetTimestamp",
@@ -346,7 +349,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ad0c8de142bc7036eb8131b780088bac')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5ea39ce1eda5b93d3d89ad375c575270')"
     ]
   }
 }

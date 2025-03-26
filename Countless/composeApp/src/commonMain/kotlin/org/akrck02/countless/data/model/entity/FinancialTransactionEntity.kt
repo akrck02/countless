@@ -27,11 +27,11 @@ import org.akrck02.countless.data.model.data.FinancialTransaction
 )
 data class FinancialTransactionEntity(
     @PrimaryKey(autoGenerate = true) var id: Int? = null,
-    @ColumnInfo(name = "account_id") var accountId: Int? = null,
+    @ColumnInfo(name = "account_id", index = true) var accountId: Int? = null,
     @ColumnInfo(name = "name") var name: String? = null,
     @ColumnInfo(name = "value") var value: Double = 0.0,
     @ColumnInfo(name = "timestamp") var timestamp: Long? = null,
-    @ColumnInfo(name = "schedule_id") var scheduleId: Int? = null,
+    @ColumnInfo(name = "schedule_id", index = true) var scheduleId: Int? = null,
 )
 
 
