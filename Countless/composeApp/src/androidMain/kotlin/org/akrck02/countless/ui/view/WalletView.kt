@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -17,27 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import countless.composeapp.generated.resources.Res
-import countless.composeapp.generated.resources.wallet_transaction_type_all
-import countless.composeapp.generated.resources.wallet_transaction_type_expenses
-import countless.composeapp.generated.resources.wallet_transaction_type_savings
+import countless.composeapp.generated.resources.income_title
+import countless.composeapp.generated.resources.outcome_title
+import org.akrck02.countless.ui.component.MinimalInfoCard
 import org.akrck02.countless.ui.component.MinimalTabBar
 import org.akrck02.countless.ui.component.SectionTitle
+import org.akrck02.countless.ui.options.TransactionType
 import org.akrck02.countless.viewmodel.WalletViewModel
-import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.koin.androidx.compose.koinViewModel
-
-enum class TransactionType(val resource: StringResource) {
-    All(Res.string.wallet_transaction_type_all),
-    Savings(Res.string.wallet_transaction_type_savings),
-    Expenses(Res.string.wallet_transaction_type_expenses);
-
-    suspend fun getName(): String {
-        return getString(resource)
-    }
-}
-
 
 @Composable
 fun WalletView(
@@ -57,7 +46,18 @@ fun WalletView(
                 end = 0.dp
             )
     ) {
-        SectionTitle("March 2025")
+        SectionTitle(
+            text = "March 2025",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 60.dp, bottom = 15.dp)
+        )
+
+        Row {
+            MinimalInfoCard(stringResource(Res.string.income_title), "30,970€")
+            MinimalInfoCard(stringResource(Res.string.outcome_title), "11,207.99€")
+        }
+
         var selected by remember { mutableStateOf(TransactionType.All) }
         val options = mapOf(
             Pair(stringResource(TransactionType.All.resource), TransactionType.All),

@@ -18,10 +18,8 @@ fun authenticateWithBiometrics(
     onSuccess: () -> Unit
 ) {
 
-
     val biometricManager = BiometricManager.from(context)
     val isBiometricAvailable = biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)
-
 
     when (isBiometricAvailable) {
         BiometricManager.BIOMETRIC_SUCCESS -> {

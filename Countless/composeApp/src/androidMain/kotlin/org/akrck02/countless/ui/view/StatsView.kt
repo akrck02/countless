@@ -1,14 +1,19 @@
 package org.akrck02.countless.ui.view
 
+import android.icu.text.DateFormat
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.EventAvailable
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -37,7 +42,7 @@ import org.akrck02.countless.data.extension.asDate
 import org.akrck02.countless.data.extension.defaultDigitFormat
 import org.akrck02.countless.data.model.data.getCurrentProgress
 import org.akrck02.countless.ui.extension.modify
-import org.akrck02.countless.ui.theme.TOTAL_ROUNDED_SHAPE
+import org.akrck02.countless.ui.theme.MIN_ROUNDED_SHAPE
 import org.akrck02.countless.viewmodel.StatsViewModel
 import org.jetbrains.compose.resources.stringResource
 import org.koin.androidx.compose.koinViewModel
@@ -144,25 +149,41 @@ fun StatsView(
                     .padding(top = 35.dp, bottom = 10.dp)
             )
 
-            Surface(
-                shape = TOTAL_ROUNDED_SHAPE,
-                color = MaterialTheme.colorScheme.surfaceContainerLow,
-                modifier = Modifier
-                    .padding(5.dp),
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
             ) {
-
-                val estimatedTimestamp = viewModel.currentFinancialGoal.estimatedTimestamp
-                Text(
-                    text = "You will reach your financial goal on ${estimatedTimestamp.asDate()}.",
-                    fontSize = 3.em,
-                    fontWeight = FontWeight.Normal,
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant.modify(.5f),
+                Surface(
+                    shape = MIN_ROUNDED_SHAPE,
+                    color = MaterialTheme.colorScheme.surfaceContainerLow,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 0.dp, bottom = 0.dp)
-                )
+                        .padding(5.dp),
+                ) {
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.EventAvailable,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant.modify(.5f),
+                            contentDescription = "Estimated time"
+                        )
+
+                        val estimatedTimestamp = viewModel.currentFinancialGoal.estimatedTimestamp
+                        Text(
+                            text = "${estimatedTimestamp.asDate(DateFormat.MEDIUM)}.",
+                            fontSize = 4.em,
+                            fontWeight = FontWeight.Normal,
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant.modify(.5f),
+                            modifier = Modifier.padding(start = 6.dp, bottom = 0.dp)
+                        )
+                    }
+                }
             }
+
         }
     }
 }

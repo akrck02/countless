@@ -1,6 +1,8 @@
 package org.akrck02.countless.ui.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -81,7 +84,8 @@ fun <T> MinimalTabBar(
     Row(
         modifier = Modifier
             .horizontalScroll(rememberScrollState())
-            .padding(horizontal = 50.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 50.dp, vertical = 25.dp)
     ) {
         items.keys.forEach { key ->
 
@@ -89,20 +93,21 @@ fun <T> MinimalTabBar(
             val selected = item == selected
             Column(modifier = Modifier.padding(horizontal = 5.dp)) {
                 Surface(
+                    shape = TOTAL_ROUNDED_SHAPE,
                     color = _root_ide_package_.androidx.compose.ui.graphics.Color(0, 0, 0, 0),
-                    modifier = Modifier.padding(horizontal = 0.dp),
-                    onClick = { onSelected(item) }
+                    modifier = Modifier.clickable(indication = null, interactionSource = remember { MutableInteractionSource() }) {
+                        onSelected(item)
+                    }
                 ) {
                     Column(
                         verticalArrangement = Arrangement.Center,
                         modifier = Modifier
                             .padding(horizontal = 3.dp)
                             .height(35.dp)
-
                     ) {
                         Text(
                             text = key,
-                            fontSize = 5.em,
+                            fontSize = 7.em,
                             fontWeight = FontWeight.Normal,
                             textAlign = TextAlign.Center,
                             color = if (selected) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurfaceVariant.modify(.5f),

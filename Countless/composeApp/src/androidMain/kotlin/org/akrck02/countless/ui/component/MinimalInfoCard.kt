@@ -47,7 +47,7 @@ fun MinimalInfoCard(label: String, value: String) {
                 Text(
                     text = label,
                     fontSize = 5.em,
-                    fontWeight = FontWeight.W500,
+                    fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurfaceVariant.modify(.5f),
                     modifier = Modifier

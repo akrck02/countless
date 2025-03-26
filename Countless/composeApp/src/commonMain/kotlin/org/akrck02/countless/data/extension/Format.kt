@@ -11,12 +11,12 @@ fun Double?.defaultDigitFormat(): String {
     return DecimalFormat("#,###,###.##").format(this)
 }
 
-fun Long?.asDate(): String {
+fun Long?.asDate(format: Int = DateFormat.SHORT): String {
 
     if (null == this) return ""
 
     return try {
-        SimpleDateFormat.getDateInstance(DateFormat.SHORT).format(this)
+        SimpleDateFormat.getDateInstance(format).format(this)
     } catch (_: Exception) {
         ""
     }

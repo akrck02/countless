@@ -41,7 +41,7 @@ import java.time.LocalDate
 @Preview
 fun App(appViewModel: AppViewModel = koinViewModel()) {
 
-    var authenticated by remember { mutableStateOf(false) }
+    var authenticated by remember { mutableStateOf(true) }
 
     MaterialTheme(
         colorScheme = getSystemThemeColors(),

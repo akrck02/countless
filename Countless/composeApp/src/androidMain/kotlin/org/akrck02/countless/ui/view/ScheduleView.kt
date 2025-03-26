@@ -6,8 +6,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,9 +26,13 @@ import countless.composeapp.generated.resources.month_selector_option
 import countless.composeapp.generated.resources.outcome_title
 import countless.composeapp.generated.resources.schedule_title
 import countless.composeapp.generated.resources.year_selector_option
+import org.akrck02.countless.data.extension.asDate
+import org.akrck02.countless.data.model.data.FinancialTransaction
 import org.akrck02.countless.ui.component.MinimalInfoCard
+import org.akrck02.countless.ui.component.MinimalTabBar
 import org.akrck02.countless.ui.component.SectionTitle
-import org.akrck02.countless.ui.component.TabBar
+import org.akrck02.countless.ui.component.TransactionCard
+import org.akrck02.countless.ui.options.TransactionType
 import org.akrck02.countless.viewmodel.ScheduleViewModel
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
@@ -48,7 +55,6 @@ fun ScheduleView(
     viewModel: ScheduleViewModel = koinViewModel()
 ) {
 
-
     Column(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -67,37 +73,80 @@ fun ScheduleView(
                 .padding(top = 60.dp, bottom = 10.dp)
         )
 
-        var selected by remember { mutableStateOf(Period.Month) }
-        val options = mapOf(
-            Pair(stringResource(Period.Year.resource), Period.Year),
-            Pair(stringResource(Period.Month.resource), Period.Month)
-        )
-
-        TabBar<Period>(options, selected) { selected = it }
-        when (selected) {
-            Period.Month -> YearScheduledWallet()
-            Period.Year -> MonthScheduledWallet()
-        }
-
-    }
-}
-
-@Composable
-fun YearScheduledWallet() {
-    Column(modifier = Modifier.padding(top = 35.dp)) {
-        Row {
+        Row(horizontalArrangement = Arrangement.Center) {
             MinimalInfoCard(stringResource(Res.string.income_title), "30,970€")
             MinimalInfoCard(stringResource(Res.string.outcome_title), "11,207.99€")
         }
+
+        var selectedPeriod by remember { mutableStateOf(Period.Month) }
+
+        var selectedTransactionType by remember { mutableStateOf(TransactionType.All) }
+        val options = mapOf(
+            Pair(stringResource(TransactionType.All.resource), TransactionType.All),
+            Pair(stringResource(TransactionType.Savings.resource), TransactionType.Savings),
+            Pair(stringResource(TransactionType.Expenses.resource), TransactionType.Expenses)
+        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .padding(top = 5.dp)
+                .fillMaxWidth()
+        ) {
+
+            MinimalTabBar<TransactionType>(options, selectedTransactionType) { selectedTransactionType = it }
+            ScheduledWallet(selectedTransactionType, viewModel, selectedPeriod)
+        }
+
     }
 }
 
 @Composable
-fun MonthScheduledWallet() {
-    Column(modifier = Modifier.padding(top = 35.dp)) {
+fun ScheduledWallet(selectedTransactionType: TransactionType, viewModel: ScheduleViewModel, selectedPeriod: Period) {
+    when (selectedTransactionType) {
+        TransactionType.All -> AllScheduleWallet(viewModel, selectedPeriod)
+        TransactionType.Savings -> SavingsScheduleWallet(viewModel, selectedPeriod)
+        TransactionType.Expenses -> ExpensesScheduleWallet(viewModel, selectedPeriod)
+    }
+}
+
+@Composable
+fun AllScheduleWallet(viewModel: ScheduleViewModel, selectedPeriod: Period) {
+
+    for (i in 1..100) {
+        TransactionCard("Spotify premium", "28/03/2025", "-14342.99€", MaterialTheme.colorScheme.error)
+    }
+
+    val transaction: List<FinancialTransaction> = remember { viewModel.getScheduledTransactions(selectedPeriod) }
+
+    LazyColumn(modifier = Modifier.padding(top = 5.dp)) {
+
+        items(transaction) { it ->
+            TransactionCard(
+                name = it.name ?: "",
+                subLabel = it.timestamp.asDate(),
+                value = "${it.value}€",
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+    }
+
+
+}
+
+@Composable
+fun SavingsScheduleWallet(viewModel: ScheduleViewModel, selectedPeriod: Period) {
+    Column(modifier = Modifier.padding(top = 5.dp)) {
         Row {
-            MinimalInfoCard(stringResource(Res.string.income_title), "1,970€")
-            MinimalInfoCard(stringResource(Res.string.outcome_title), "767.99€")
+
+        }
+    }
+}
+
+@Composable
+fun ExpensesScheduleWallet(viewModel: ScheduleViewModel, selectedPeriod: Period) {
+    Column(modifier = Modifier.padding(top = 5.dp)) {
+        Row {
+
         }
     }
 }
