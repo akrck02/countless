@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -44,7 +45,12 @@ fun GoalsView(
             )
     ) {
 
-        SectionTitle(stringResource(Res.string.financial_goals_title))
+        SectionTitle(
+            stringResource(Res.string.financial_goals_title),
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 80.dp, bottom = 30.dp)
+        )
 
         viewModel.financialGoal?.also {
             FinancialGoalCard(it)

@@ -50,7 +50,7 @@ fun WalletView(
             text = "March 2025",
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 60.dp, bottom = 15.dp)
+                .padding(top = 80.dp, bottom = 30.dp)
         )
 
         Row {

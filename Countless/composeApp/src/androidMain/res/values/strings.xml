@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">Countless</string>
-    <string name="stats_option">Stats</string>
-    <string name="wallet_option">Wallet</string>
-    <string name="schedule_option">Schedule</string>
-    <string name="goals_option">Goals</string>
-</resources>

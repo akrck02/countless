@@ -1,5 +1,8 @@
 package org.akrck02.countless.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
@@ -15,13 +18,13 @@ class AppViewModel(
 
     var financialProcessor: FinancialProcessor = FinancialProcessor()
     var currentAccount: Account? = null
+    var loaded: Boolean by mutableStateOf(false)
 
     init {
-        viewModelScope.launch {
-            loadAccountDataIfPresent()
-            financialProcessor.sync()
-        }
+        start()
     }
+
+    fun isFirstTime(): Boolean = currentAccount == null
 
     private suspend fun loadAccountDataIfPresent() {
 
@@ -31,5 +34,13 @@ class AppViewModel(
         // Find if the account exists, create otherwise.
         currentAccount = accountRepository.find(DEFAULT_ACCOUNT_ID)
 
+    }
+
+    fun start() {
+        viewModelScope.launch {
+            loadAccountDataIfPresent()
+            financialProcessor.sync()
+            loaded = true
+        }
     }
 }

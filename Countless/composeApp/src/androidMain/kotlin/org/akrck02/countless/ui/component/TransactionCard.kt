@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
 import org.akrck02.countless.ui.extension.modify
 import org.akrck02.countless.ui.theme.MEDIUM_ROUNDED_SHAPE
 
@@ -50,14 +50,14 @@ fun TransactionCard(
                     Text(
                         text = name,
                         fontWeight = FontWeight.SemiBold,
-                        fontSize = 5.em,
+                        fontSize = 16.sp,
                         modifier = Modifier.padding(top = 5.dp),
                         color = MaterialTheme.colorScheme.onSurfaceVariant.modify(.8f)
                     )
                     Text(
                         text = subLabel,
                         fontWeight = FontWeight.SemiBold,
-                        fontSize = 3.em,
+                        fontSize = 12.sp,
                         color = MaterialTheme.colorScheme.onSurfaceVariant.modify(.5f)
                     )
                 }
@@ -71,7 +71,7 @@ fun TransactionCard(
                     Text(
                         text = value,
                         color = color,
-                        fontSize = 6.em
+                        fontSize = 18.sp
                     )
                 }
             }

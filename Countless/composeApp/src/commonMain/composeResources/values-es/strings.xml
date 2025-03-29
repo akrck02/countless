@@ -1,12 +1,18 @@
 <resources>
     <string name="app_name">Countless</string>
+    <string name="app_subtitle">Ahorrar nunca fue tan fácil.</string>
+    <string name="app_author_template">Akrck02 - %1$s</string>
+
+    <string name="biometrics_title">Entrando a countless.</string>
+    <string name="biometrics_subtitle">Por favor introduzca su huella para acceder.</string>
+
     <string name="stats_option">Estadisticas</string>
     <string name="wallet_option">Cartera</string>
     <string name="schedule_option">Programación</string>
     <string name="goals_option">Objetivos</string>
     <string name="year_selector_option">Año</string>
     <string name="month_selector_option">Mes</string>
-    <string name="schedule_title">Programación</string>
+    <string name="schedule_title_template">Programación del %1$s</string>
     <string name="financial_goals_title">Objetivos financieros</string>
     <string name="income_title">Ingresos</string>
     <string name="outcome_title">Gastos</string>
@@ -30,7 +36,32 @@
     <string name="financial_goal_estimated_saving">Ahorro mensual estimado</string>
 
     <!-- WALLET VIEW -->
-    <string name="wallet_transaction_type_all">Todos</string>
+    <string name="wallet_transaction_type_all">Todo</string>
     <string name="wallet_transaction_type_savings">Ingresos</string>
     <string name="wallet_transaction_type_expenses">Gastos</string>
+
+    <!-- TUTORIAL VIEW -->
+    <string name="tutorial_greeting">Bienvenido/a a countless 👋🏻</string>
+    <string name="tutorial_start_account_creation">Empecemos creando tu cuenta de ahorro.</string>
+
+    <string name="tutorial_step_2_title">Añade un objetivo \uD83D\uDCB5</string>
+    <string name="tutorial_step_2_subtitle">Comencemos a planear algunas cosas.</string>
+
+    <string name="tutorial_goal_name_label">Nombre</string>
+    <string name="tutorial_goal_example_name">Comprarme un coche</string>
+
+    <string name="tutorial_goal_target_date_label">Fecha (estimada)</string>
+
+    <string name="tutorial_goal_value_label">Precio</string>
+    <string name="tutorial_goal_example_value">40000</string>
+
+    <string name="tutorial_step_3_title">Añadamos algunas reglas 💰</string>
+    <string name="tutorial_step_3_subtitle">Todo en esta vida tiene limites.</string>
+
+    <string name="tutorial_goal_month_spend_limit_label">Limite mensual de gasto</string>
+    <string name="tutorial_goal_example_month_spend_limit">300</string>
+
+    <string name="tutorial_goal_month_savings_label">Ahorro mensual (estimado)</string>
+    <string name="tutorial_goal_example_month_savings">300</string>
+
 </resources>

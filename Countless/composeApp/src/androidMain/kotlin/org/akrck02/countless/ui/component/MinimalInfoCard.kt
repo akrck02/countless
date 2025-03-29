@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
 import org.akrck02.countless.ui.extension.modify
 import org.akrck02.countless.ui.theme.MEDIUM_ROUNDED_SHAPE
 
@@ -46,7 +46,7 @@ fun MinimalInfoCard(label: String, value: String) {
             ) {
                 Text(
                     text = label,
-                    fontSize = 5.em,
+                    fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurfaceVariant.modify(.5f),
@@ -57,7 +57,7 @@ fun MinimalInfoCard(label: String, value: String) {
 
                 Text(
                     text = value,
-                    fontSize = 5.em,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.W500,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,

@@ -21,7 +21,7 @@ import androidx.navigation.NavHostController
 import countless.composeapp.generated.resources.Res
 import countless.composeapp.generated.resources.income_title
 import countless.composeapp.generated.resources.outcome_title
-import countless.composeapp.generated.resources.schedule_title
+import countless.composeapp.generated.resources.schedule_title_template
 import org.akrck02.countless.data.extension.asDate
 import org.akrck02.countless.data.model.data.FinancialTransaction
 import org.akrck02.countless.ui.component.MinimalInfoCard
@@ -48,6 +48,7 @@ fun ScheduleView(
         Pair(stringResource(TransactionType.Savings.resource), TransactionType.Savings),
         Pair(stringResource(TransactionType.Expenses.resource), TransactionType.Expenses)
     )
+    var selectedPeriod by remember { mutableStateOf(Period.Month) }
 
     var transactions: List<FinancialTransaction> by remember { mutableStateOf(listOf()) }
     LazyColumn(
@@ -59,18 +60,19 @@ fun ScheduleView(
     ) {
         item {
             SectionTitle(
-                text = stringResource(Res.string.schedule_title),
+                text = stringResource(Res.string.schedule_title_template, stringResource(selectedPeriod.resource)),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 60.dp, bottom = 10.dp)
-            )
+                    .padding(top = 80.dp, bottom = 30.dp)
+            ) {
+                selectedPeriod = if (selectedPeriod == Period.Month) Period.Year else Period.Month
+            }
 
             Row(horizontalArrangement = Arrangement.Center) {
                 MinimalInfoCard(stringResource(Res.string.income_title), "30,970€")
                 MinimalInfoCard(stringResource(Res.string.outcome_title), "11,207.99€")
             }
 
-            var selectedPeriod by remember { mutableStateOf(Period.Month) }
             MinimalTabBar(options, selectedTransactionType) {
                 selectedTransactionType = it
                 transactions =

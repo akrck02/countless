@@ -23,7 +23,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import countless.composeapp.generated.resources.Res
 import countless.composeapp.generated.resources.financial_goal_current_goal
@@ -77,7 +77,7 @@ fun FinancialGoalCard(financialGoal: FinancialGoal, animationIndex: Int = 1) {
             ) {
                 Text(
                     text = stringResource(Res.string.financial_goal_current_goal),
-                    fontSize = 5.em,
+                    fontSize = 14.sp,
                     fontWeight = FontWeight.W500,
                     textAlign = TextAlign.Left,
                     color = MaterialTheme.colorScheme.onSurfaceVariant.modify(.5f),
@@ -90,7 +90,7 @@ fun FinancialGoalCard(financialGoal: FinancialGoal, animationIndex: Int = 1) {
 
                 Text(
                     text = financialGoal.name ?: "",
-                    fontSize = 7.em,
+                    fontSize = 24.sp,
                     fontWeight = FontWeight.W500,
                     textAlign = TextAlign.Left,
                     color = MaterialTheme.colorScheme.onSurfaceVariant.modify(.95f),
@@ -102,7 +102,7 @@ fun FinancialGoalCard(financialGoal: FinancialGoal, animationIndex: Int = 1) {
 
                 Text(
                     text = stringResource(Res.string.financial_goal_progress_template, "${financialGoal.getCurrentProgressPercent()}%"),
-                    fontSize = 5.em,
+                    fontSize = 14.sp,
                     fontWeight = FontWeight.W500,
                     textAlign = TextAlign.Left,
                     color = MaterialTheme.colorScheme.onSurfaceVariant.modify(.5f),
@@ -132,7 +132,7 @@ fun FinancialGoalCard(financialGoal: FinancialGoal, animationIndex: Int = 1) {
                         "${financialGoal.currentValue.defaultDigitFormat()}€",
                         "${financialGoal.targetValue.defaultDigitFormat()}€"
                     ),
-                    fontSize = 5.em,
+                    fontSize = 14.sp,
                     fontWeight = FontWeight.W500,
                     textAlign = TextAlign.Left,
                     color = MaterialTheme.colorScheme.onSurfaceVariant.modify(.5f),
@@ -147,7 +147,7 @@ fun FinancialGoalCard(financialGoal: FinancialGoal, animationIndex: Int = 1) {
                         Res.string.financial_goal_estimated_time_template,
                         financialGoal.getHumanReadableEstimatedTimeDate()
                     ),
-                    fontSize = 5.em,
+                    fontSize = 14.sp,
                     fontWeight = FontWeight.W500,
                     textAlign = TextAlign.Left,
                     color = MaterialTheme.colorScheme.onSurfaceVariant.modify(.5f),
@@ -161,7 +161,7 @@ fun FinancialGoalCard(financialGoal: FinancialGoal, animationIndex: Int = 1) {
 
         Text(
             text = stringResource(Res.string.financial_goal_month_limit),
-            fontSize = 5.em,
+            fontSize = 14.sp,
             fontWeight = FontWeight.W500,
             textAlign = TextAlign.Left,
             color = MaterialTheme.colorScheme.onSurfaceVariant.modify(.5f),
@@ -178,7 +178,7 @@ fun FinancialGoalCard(financialGoal: FinancialGoal, animationIndex: Int = 1) {
 
         Text(
             text = financialGoal.monthSavings.defaultDigitFormat(),
-            fontSize = 5.em,
+            fontSize = 14.sp,
             fontWeight = FontWeight.W500,
             textAlign = TextAlign.Left,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -195,7 +195,7 @@ fun FinancialGoalCard(financialGoal: FinancialGoal, animationIndex: Int = 1) {
 
         Text(
             text = stringResource(Res.string.financial_goal_estimated_saving),
-            fontSize = 5.em,
+            fontSize = 14.sp,
             fontWeight = FontWeight.W500,
             textAlign = TextAlign.Left,
             color = MaterialTheme.colorScheme.onSurfaceVariant.modify(.5f),
@@ -211,7 +211,7 @@ fun FinancialGoalCard(financialGoal: FinancialGoal, animationIndex: Int = 1) {
 
         Text(
             text = financialGoal.monthSpendLimit.defaultDigitFormat(),
-            fontSize = 5.em,
+            fontSize = 14.sp,
             fontWeight = FontWeight.W500,
             textAlign = TextAlign.Left,
             color = MaterialTheme.colorScheme.onSurfaceVariant,

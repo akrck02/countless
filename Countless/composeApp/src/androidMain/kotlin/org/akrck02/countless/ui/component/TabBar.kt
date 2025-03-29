@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
 import org.akrck02.countless.ui.extension.modify
 import org.akrck02.countless.ui.theme.TOTAL_ROUNDED_SHAPE
 
@@ -116,7 +117,7 @@ fun <T> MinimalTabBar(
                         ) {
                             Text(
                                 text = key,
-                                fontSize = 7.em,
+                                fontSize = 24.sp,
                                 fontWeight = FontWeight.Normal,
                                 textAlign = TextAlign.Center,
                                 color = if (isSelected) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurfaceVariant.modify(

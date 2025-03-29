@@ -33,7 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import countless.composeapp.generated.resources.Res
@@ -197,7 +197,7 @@ private fun BottomNavigationBarOption(
                 text = label,
                 color = MaterialTheme.colorScheme.primary.takeIf { selected }
                     ?: MaterialTheme.colorScheme.onSurface.modify(.4f),
-                fontSize = 3.em
+                fontSize = 11.sp,
             )
         }
     }

@@ -1,12 +1,18 @@
 <resources>
     <string name="app_name">Countless</string>
+    <string name="app_subtitle">The easy way of saving.</string>
+    <string name="app_author_template">Akrck02 - %1$s</string>
+
+    <string name="biometrics_title">Entering countless app.</string>
+    <string name="biometrics_subtitle">Please enter your fingerprint to access.</string>
+
     <string name="stats_option">Stats</string>
     <string name="wallet_option">Wallet</string>
     <string name="schedule_option">Schedule</string>
     <string name="goals_option">Goals</string>
     <string name="year_selector_option">Year</string>
     <string name="month_selector_option">Month</string>
-    <string name="schedule_title">Schedule</string>
+    <string name="schedule_title_template">%1$s schedule</string>
     <string name="financial_goals_title">Financial goals</string>
     <string name="income_title">Income</string>
     <string name="outcome_title">Outcome</string>
@@ -33,4 +39,29 @@
     <string name="wallet_transaction_type_all">All</string>
     <string name="wallet_transaction_type_savings">Savings</string>
     <string name="wallet_transaction_type_expenses">Expenses</string>
+
+    <!-- TUTORIAL VIEW -->
+    <string name="tutorial_greeting">Welcome to countless 👋🏻</string>
+    <string name="tutorial_start_account_creation">Let's start creating your savings account.</string>
+
+    <string name="tutorial_step_2_title">Add a financial goal \uD83D\uDCB5</string>
+    <string name="tutorial_step_2_subtitle">Let's start planing some things.</string>
+
+    <string name="tutorial_goal_name_label">Name</string>
+    <string name="tutorial_goal_example_name">Buy a car</string>
+
+    <string name="tutorial_goal_target_date_label">Reach date (estimated)</string>
+
+    <string name="tutorial_goal_value_label">Value</string>
+    <string name="tutorial_goal_example_value">40000</string>
+
+    <string name="tutorial_step_3_title">Let's add some rules 💰</string>
+    <string name="tutorial_step_3_subtitle">Everything in life has a limit.</string>
+
+    <string name="tutorial_goal_month_spend_limit_label">Month spend limit</string>
+    <string name="tutorial_goal_example_month_spend_limit">300</string>
+
+    <string name="tutorial_goal_month_savings_label">Month savings (estimated)</string>
+    <string name="tutorial_goal_example_month_savings">300</string>
+
 </resources>
