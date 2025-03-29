@@ -18,6 +18,7 @@ import org.akrck02.countless.data.model.entity.FinancialTransactionEntity
 import org.akrck02.countless.data.model.entity.ScheduleEntity
 
 @Database(
+    exportSchema = true,
     entities = [
         AccountEntity::class,
         FinancialGoalEntity::class,

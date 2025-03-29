@@ -7,6 +7,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import org.akrck02.countless.data.extension.assertNotBlank
+import org.akrck02.countless.data.extension.assertNullOrPositive
 import org.akrck02.countless.data.extension.assertPositive
 import org.akrck02.countless.data.model.data.FinancialTransaction
 
@@ -47,13 +48,13 @@ fun FinancialTransactionEntity.toModel() = FinancialTransaction(
 
 fun FinancialTransaction.toEntity(): FinancialTransactionEntity {
 
-    id.assertPositive("id")
+    id.assertNullOrPositive("id")
     accountId.assertPositive("accountId")
     name.assertNotBlank("name")
     timestamp.assertPositive("timestamp")
 
     return FinancialTransactionEntity(
-        id = id!!,
+        id = id ?: 0,
         accountId = accountId!!,
         name = name!!,
         value = value,

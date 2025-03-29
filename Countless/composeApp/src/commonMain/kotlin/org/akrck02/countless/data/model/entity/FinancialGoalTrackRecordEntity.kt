@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import org.akrck02.countless.data.extension.assertNullOrPositive
 import org.akrck02.countless.data.extension.assertPositive
 import org.akrck02.countless.data.model.data.FinancialGoalTrackRecord
 
@@ -38,7 +39,7 @@ fun FinancialGoalTrackRecordEntity.toModel() = FinancialGoalTrackRecord(
 
 fun FinancialGoalTrackRecord.toEntity(): FinancialGoalTrackRecordEntity {
 
-    financialGoalId.assertPositive("FinancialGoalTrackRecord.id")
+    id.assertNullOrPositive("FinancialGoalTrackRecord.id")
     financialGoalId.assertPositive("FinancialGoalTrackRecord.financialGoalId")
     currentValue.assertPositive("FinancialGoalTrackRecord.currentValue")
     targetValue.assertPositive("FinancialGoalTrackRecord.targetValue")
@@ -46,7 +47,7 @@ fun FinancialGoalTrackRecord.toEntity(): FinancialGoalTrackRecordEntity {
     insertTimestamp.assertPositive("FinancialGoalTrackRecord.insertTimestap")
 
     return FinancialGoalTrackRecordEntity(
-        id = id!!,
+        id = id ?: 0,
         financialGoalId = financialGoalId!!,
         targetValue = targetValue,
         currentValue = currentValue,

@@ -7,6 +7,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import org.akrck02.countless.data.extension.assertNotBlank
+import org.akrck02.countless.data.extension.assertNullOrPositive
 import org.akrck02.countless.data.extension.assertPositive
 import org.akrck02.countless.data.model.data.Schedule
 import org.akrck02.countless.data.model.option.ScheduleType
@@ -40,13 +41,13 @@ fun ScheduleEntity.toModel() = Schedule(
 
 fun Schedule.toEntity(): ScheduleEntity {
 
-    id.assertPositive("schedule.id")
+    id.assertNullOrPositive("schedule.id")
     accountId.assertPositive("schedule.accountId")
     name.assertNotBlank("schedule.name")
     startTimestamp.assertPositive("schedule.startTimestamp")
 
     return ScheduleEntity(
-        id = id!!,
+        id = id ?: 0,
         accountId = accountId!!,
         name = name!!,
         type = type,

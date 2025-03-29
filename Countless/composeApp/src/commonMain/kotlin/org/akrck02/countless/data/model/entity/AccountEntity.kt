@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.akrck02.countless.data.extension.assertNotNull
-import org.akrck02.countless.data.extension.assertPositive
+import org.akrck02.countless.data.extension.assertNullOrPositive
 import org.akrck02.countless.data.model.data.Account
 import java.util.UUID
 
@@ -23,11 +23,11 @@ fun AccountEntity.toModel() = Account(
 
 fun Account.toEntity(): AccountEntity {
 
-    id.assertPositive("id")
+    id.assertNullOrPositive("id")
     name.assertNotNull("name")
 
     return AccountEntity(
-        id = id!!,
+        id = id ?: 0,
         syncServiceExternalUuid = syncServiceExternalUuid,
         name = name!!
     )
