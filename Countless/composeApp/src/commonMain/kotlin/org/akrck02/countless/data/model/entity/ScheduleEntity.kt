@@ -6,6 +6,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import org.akrck02.countless.data.extension.assertNotBlank
+import org.akrck02.countless.data.extension.assertPositive
 import org.akrck02.countless.data.model.data.Schedule
 import org.akrck02.countless.data.model.option.ScheduleType
 
@@ -19,11 +21,11 @@ import org.akrck02.countless.data.model.option.ScheduleType
     )]
 )
 data class ScheduleEntity(
-    @PrimaryKey(autoGenerate = true) var id: Int? = null,
-    @ColumnInfo(name = "account_id", index = true) var accountId: Int? = null,
-    @ColumnInfo(name = "name") var name: String? = null,
+    @PrimaryKey(autoGenerate = true) var id: Int,
+    @ColumnInfo(name = "account_id", index = true) var accountId: Int,
+    @ColumnInfo(name = "name") var name: String,
     @ColumnInfo(name = "type") var type: ScheduleType = ScheduleType.UNKNOWN,
-    @ColumnInfo(name = "start_timestamp") var startTimestamp: Long? = null,
+    @ColumnInfo(name = "start_timestamp") var startTimestamp: Long,
     @ColumnInfo(name = "end_timestamp") var endTimestamp: Long? = null
 )
 
@@ -36,11 +38,19 @@ fun ScheduleEntity.toModel() = Schedule(
     endTimestamp = endTimestamp
 )
 
-fun Schedule.toEntity() = ScheduleEntity(
-    id = id,
-    accountId = accountId,
-    name = name,
-    type = type,
-    startTimestamp = startTimestamp,
-    endTimestamp = endTimestamp
-)
+fun Schedule.toEntity(): ScheduleEntity {
+
+    id.assertPositive("schedule.id")
+    accountId.assertPositive("schedule.accountId")
+    name.assertNotBlank("schedule.name")
+    startTimestamp.assertPositive("schedule.startTimestamp")
+
+    return ScheduleEntity(
+        id = id!!,
+        accountId = accountId!!,
+        name = name!!,
+        type = type,
+        startTimestamp = startTimestamp!!,
+        endTimestamp = endTimestamp
+    )
+}

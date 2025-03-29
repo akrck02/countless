@@ -35,3 +35,45 @@ var DB_2_to_3 = listOf(
     "CREATE INDEX index_financial_transaction_schedule_id ON financial_transaction(schedule_id);",
     "CREATE INDEX index_schedule_account_id ON schedule(account_id);"
 )
+
+var DB_3_to_4 = listOf(
+
+    "DROP TABLE financial_goal_track_record;",
+    "DROP TABLE account;",
+    """
+       
+        DROP TABLE financial_goal;
+        
+        
+    """.trimIndent(),
+
+
+    "ALTER TABLE financial_goal ALTER id INTEGER NOT NULL",
+
+    "ALTER TABLE financial_goal ALTER COLUMN id INTEGER NOT NULL;",
+    "ALTER TABLE financial_goal ALTER COLUMN account_id INTEGER NOT NULL;",
+    "ALTER TABLE financial_goal ALTER COLUMN name TEXT NOT NULL;",
+    "ALTER TABLE financial_goal ALTER COLUMN target_value REAL NOT NULL;",
+    "ALTER TABLE financial_goal ALTER COLUMN current_value REAL NOT NULL;",
+    "ALTER TABLE financial_goal ALTER COLUMN month_spend_limit REAL NOT NULL;",
+    "ALTER TABLE financial_goal ALTER COLUMN month_savings REAL NOT NULL;",
+    "ALTER TABLE financial_goal ALTER COLUMN target_timestamp INTEGER NOT NULL;",
+
+    "ALTER TABLE financial_goal_track_record ALTER COLUMN id INTEGER NOT NULL;",
+    "ALTER TABLE financial_goal_track_record ALTER COLUMN financial_goal_id INTEGER NOT NULL;",
+    "ALTER TABLE financial_goal_track_record ALTER COLUMN target_value REAL NOT NULL;",
+    "ALTER TABLE financial_goal_track_record ALTER COLUMN current_value REAL NOT NULL;",
+    "ALTER TABLE financial_goal_track_record ALTER COLUMN insert_timestamp INTEGER NOT NULL;",
+    "ALTER TABLE financial_goal_track_record ALTER COLUMN target_timestamp INTEGER NOT NULL;",
+
+    "ALTER TABLE financial_transaction ALTER COLUMN id INTEGER NOT NULL;",
+    "ALTER TABLE financial_transaction ALTER COLUMN account_id INTEGER NOT NULL;",
+    "ALTER TABLE financial_transaction ALTER COLUMN name TEXT NOT NULL;",
+    "ALTER TABLE financial_transaction ALTER COLUMN value REAL NOT NULL;",
+    "ALTER TABLE financial_transaction ALTER COLUMN timestamp INTEGER NOT NULL;",
+
+    "ALTER TABLE schedule ALTER COLUMN id INTEGER NOT NULL;",
+    "ALTER TABLE schedule ALTER COLUMN account_id INTEGER NOT NULL;",
+    "ALTER TABLE schedule ALTER COLUMN name INTEGER NOT NULL;",
+    "ALTER TABLE schedule ALTER COLUMN start_timestamp INTEGER NOT NULL;",
+)

@@ -16,9 +16,6 @@ import org.akrck02.countless.data.model.entity.FinancialGoalEntity
 import org.akrck02.countless.data.model.entity.FinancialGoalTrackRecordEntity
 import org.akrck02.countless.data.model.entity.FinancialTransactionEntity
 import org.akrck02.countless.data.model.entity.ScheduleEntity
-import org.akrck02.countless.module.migrations.DB_1_TO_2
-import org.akrck02.countless.module.migrations.DB_2_to_3
-import org.akrck02.countless.module.migrations.dbMigration
 
 @Database(
     entities = [
@@ -28,7 +25,7 @@ import org.akrck02.countless.module.migrations.dbMigration
         ScheduleEntity::class,
         FinancialTransactionEntity::class
     ],
-    version = 3
+    version = 1
 )
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -50,10 +47,7 @@ fun getRoomDatabase(
     builder: RoomDatabase.Builder<AppDatabase>
 ): AppDatabase {
     return builder
-        .addMigrations(
-            dbMigration(1, 2, DB_1_TO_2),
-            dbMigration(2, 3, DB_2_to_3)
-        )
+        .addMigrations()
         .fallbackToDestructiveMigrationOnDowngrade(true)
         .setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.IO)

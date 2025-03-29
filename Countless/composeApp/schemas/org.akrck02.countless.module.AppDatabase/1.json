@@ -2,21 +2,23 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "c4ee66f1a076ddc7031bdcbd649278ba",
+    "identityHash": "c787028e58afc5094fc779754d707724",
     "entities": [
       {
         "tableName": "account",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `sync_service_external_uuid` BLOB)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `sync_service_external_uuid` BLOB)",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "name",
             "columnName": "name",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "syncServiceExternalUuid",
@@ -33,46 +35,53 @@
       },
       {
         "tableName": "financial_goal",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `account_id` INTEGER, `name` TEXT, `target_value` REAL NOT NULL, `current_value` REAL NOT NULL, `month_spend_limit` REAL NOT NULL, `month_savings` REAL NOT NULL, `target_timestamp` INTEGER, `estimated_timestamp` INTEGER, FOREIGN KEY(`account_id`) REFERENCES `account`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `account_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `target_value` REAL NOT NULL DEFAULT 0, `current_value` REAL NOT NULL DEFAULT 0, `month_spend_limit` REAL NOT NULL DEFAULT 0, `month_savings` REAL NOT NULL DEFAULT 0, `target_timestamp` INTEGER, `estimated_timestamp` INTEGER, FOREIGN KEY(`account_id`) REFERENCES `account`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "accountId",
             "columnName": "account_id",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "name",
             "columnName": "name",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "targetValue",
             "columnName": "target_value",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           },
           {
             "fieldPath": "currentValue",
             "columnName": "current_value",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           },
           {
             "fieldPath": "monthSpendLimit",
             "columnName": "month_spend_limit",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           },
           {
             "fieldPath": "monthSavings",
             "columnName": "month_savings",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           },
           {
             "fieldPath": "targetTimestamp",
@@ -91,6 +100,17 @@
             "id"
           ]
         },
+        "indices": [
+          {
+            "name": "index_financial_goal_account_id",
+            "unique": false,
+            "columnNames": [
+              "account_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_financial_goal_account_id` ON `${TABLE_NAME}` (`account_id`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "account",
@@ -106,23 +126,105 @@
         ]
       },
       {
-        "tableName": "schedule",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `account_id` INTEGER, `name` TEXT, `type` TEXT NOT NULL, `start_timestamp` INTEGER, `end_timestamp` INTEGER, FOREIGN KEY(`account_id`) REFERENCES `account`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "tableName": "financial_goal_track_record",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `financial_goal_id` INTEGER NOT NULL, `target_value` REAL NOT NULL DEFAULT 0, `current_value` REAL NOT NULL DEFAULT 0, `insert_timestamp` INTEGER NOT NULL, `target_timestamp` INTEGER NOT NULL, `estimated_timestamp` INTEGER, FOREIGN KEY(`financial_goal_id`) REFERENCES `financial_goal`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "financialGoalId",
+            "columnName": "financial_goal_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "targetValue",
+            "columnName": "target_value",
+            "affinity": "REAL",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "currentValue",
+            "columnName": "current_value",
+            "affinity": "REAL",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "insertTimestamp",
+            "columnName": "insert_timestamp",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "targetTimestamp",
+            "columnName": "target_timestamp",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "estimatedTimestamp",
+            "columnName": "estimated_timestamp",
             "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_financial_goal_track_record_financial_goal_id",
+            "unique": false,
+            "columnNames": [
+              "financial_goal_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_financial_goal_track_record_financial_goal_id` ON `${TABLE_NAME}` (`financial_goal_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "financial_goal",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "financial_goal_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "schedule",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `account_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `type` TEXT NOT NULL, `start_timestamp` INTEGER NOT NULL, `end_timestamp` INTEGER, FOREIGN KEY(`account_id`) REFERENCES `account`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "accountId",
             "columnName": "account_id",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "name",
             "columnName": "name",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "type",
@@ -133,7 +235,8 @@
           {
             "fieldPath": "startTimestamp",
             "columnName": "start_timestamp",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "endTimestamp",
@@ -147,6 +250,17 @@
             "id"
           ]
         },
+        "indices": [
+          {
+            "name": "index_schedule_account_id",
+            "unique": false,
+            "columnNames": [
+              "account_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_schedule_account_id` ON `${TABLE_NAME}` (`account_id`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "account",
@@ -163,22 +277,25 @@
       },
       {
         "tableName": "financial_transaction",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `account_id` INTEGER, `name` TEXT, `value` REAL NOT NULL, `timestamp` INTEGER, `schedule_id` INTEGER, FOREIGN KEY(`account_id`) REFERENCES `account`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`schedule_id`) REFERENCES `schedule`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `account_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `value` REAL NOT NULL, `timestamp` INTEGER NOT NULL, `schedule_id` INTEGER, FOREIGN KEY(`account_id`) REFERENCES `account`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`schedule_id`) REFERENCES `schedule`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "accountId",
             "columnName": "account_id",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "name",
             "columnName": "name",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "value",
@@ -189,7 +306,8 @@
           {
             "fieldPath": "timestamp",
             "columnName": "timestamp",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "scheduleId",
@@ -203,6 +321,26 @@
             "id"
           ]
         },
+        "indices": [
+          {
+            "name": "index_financial_transaction_account_id",
+            "unique": false,
+            "columnNames": [
+              "account_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_financial_transaction_account_id` ON `${TABLE_NAME}` (`account_id`)"
+          },
+          {
+            "name": "index_financial_transaction_schedule_id",
+            "unique": false,
+            "columnNames": [
+              "schedule_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_financial_transaction_schedule_id` ON `${TABLE_NAME}` (`schedule_id`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "account",
@@ -231,7 +369,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c4ee66f1a076ddc7031bdcbd649278ba')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c787028e58afc5094fc779754d707724')"
     ]
   }
 }

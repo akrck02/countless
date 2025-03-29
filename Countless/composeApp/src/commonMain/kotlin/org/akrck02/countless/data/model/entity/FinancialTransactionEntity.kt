@@ -6,6 +6,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import org.akrck02.countless.data.extension.assertNotBlank
+import org.akrck02.countless.data.extension.assertPositive
 import org.akrck02.countless.data.model.data.FinancialTransaction
 
 @Entity(
@@ -26,14 +28,13 @@ import org.akrck02.countless.data.model.data.FinancialTransaction
     ]
 )
 data class FinancialTransactionEntity(
-    @PrimaryKey(autoGenerate = true) var id: Int? = null,
-    @ColumnInfo(name = "account_id", index = true) var accountId: Int? = null,
-    @ColumnInfo(name = "name") var name: String? = null,
+    @PrimaryKey(autoGenerate = true) var id: Int,
+    @ColumnInfo(name = "account_id", index = true) var accountId: Int,
+    @ColumnInfo(name = "name") var name: String,
     @ColumnInfo(name = "value") var value: Double = 0.0,
-    @ColumnInfo(name = "timestamp") var timestamp: Long? = null,
+    @ColumnInfo(name = "timestamp") var timestamp: Long,
     @ColumnInfo(name = "schedule_id", index = true) var scheduleId: Int? = null,
 )
-
 
 fun FinancialTransactionEntity.toModel() = FinancialTransaction(
     id = id,
@@ -44,11 +45,19 @@ fun FinancialTransactionEntity.toModel() = FinancialTransaction(
     scheduleId = scheduleId
 )
 
-fun FinancialTransaction.toEntity() = FinancialTransactionEntity(
-    id = id,
-    accountId = accountId,
-    name = name,
-    value = value,
-    timestamp = timestamp,
-    scheduleId = scheduleId
-)
+fun FinancialTransaction.toEntity(): FinancialTransactionEntity {
+
+    id.assertPositive("id")
+    accountId.assertPositive("accountId")
+    name.assertNotBlank("name")
+    timestamp.assertPositive("timestamp")
+
+    return FinancialTransactionEntity(
+        id = id!!,
+        accountId = accountId!!,
+        name = name!!,
+        value = value,
+        timestamp = timestamp!!,
+        scheduleId = scheduleId
+    )
+}
