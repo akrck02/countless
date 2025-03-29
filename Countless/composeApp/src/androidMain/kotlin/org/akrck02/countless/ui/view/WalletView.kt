@@ -65,7 +65,7 @@ fun WalletView(
             Pair(stringResource(TransactionType.Expenses.resource), TransactionType.Expenses)
         )
 
-        MinimalTabBar<TransactionType>(options, selected) { selected = it }
+        MinimalTabBar(options, selected) { selected = it }
         when (selected) {
             TransactionType.All -> AllWallet()
             TransactionType.Savings -> SavingsWallet()

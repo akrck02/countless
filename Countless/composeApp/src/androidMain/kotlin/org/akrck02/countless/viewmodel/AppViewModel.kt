@@ -3,6 +3,7 @@ package org.akrck02.countless.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import org.akrck02.countless.data.FinancialProcessor
 import org.akrck02.countless.data.model.data.Account
 import org.akrck02.countless.data.repository.AccountRepository
 
@@ -13,15 +14,18 @@ class AppViewModel(
     private val accountRepository: AccountRepository,
 ) : ViewModel() {
 
+    var financialProcessor: FinancialProcessor = FinancialProcessor()
     var currentAccount: Account? = null
 
     init {
         viewModelScope.launch {
             loadBasicAccountData()
+
+            financialProcessor.sync()
         }
     }
 
-    suspend fun loadBasicAccountData() {
+    private suspend fun loadBasicAccountData() {
 
         // The account already loaded
         if (null != currentAccount) return

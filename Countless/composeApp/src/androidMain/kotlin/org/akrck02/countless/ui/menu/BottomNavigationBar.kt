@@ -12,13 +12,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Autorenew
 import androidx.compose.material.icons.rounded.BarChart
 import androidx.compose.material.icons.rounded.Flag
 import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.material.icons.rounded.Wallet
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -75,13 +75,13 @@ fun BottomNavigationBar(appViewModel: AppViewModel) {
         modifier = Modifier.fillMaxSize(),
         containerColor = MaterialTheme.colorScheme.background,
         bottomBar = {
-
             Surface(
                 color = MaterialTheme.colorScheme.surfaceContainerLow,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp)
             ) {
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
@@ -182,18 +182,22 @@ private fun BottomNavigationBarOption(
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.clickable(indication = null, interactionSource = remember { MutableInteractionSource() }) {
+            modifier = Modifier.clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }) {
                 onclick()
             }
         ) {
             Icon(
                 imageVector = icon,
-                tint = MaterialTheme.colorScheme.primary.takeIf { selected } ?: MaterialTheme.colorScheme.onSurface.modify(.4f),
+                tint = MaterialTheme.colorScheme.primary.takeIf { selected }
+                    ?: MaterialTheme.colorScheme.onSurface.modify(.4f),
                 contentDescription = label
             )
             Text(
                 text = label,
-                color = MaterialTheme.colorScheme.primary.takeIf { selected } ?: MaterialTheme.colorScheme.onSurface.modify(.4f),
+                color = MaterialTheme.colorScheme.primary.takeIf { selected }
+                    ?: MaterialTheme.colorScheme.onSurface.modify(.4f),
                 fontSize = 3.em
             )
         }

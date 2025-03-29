@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package org.akrck02.countless.data.dao
 
 import androidx.room.Dao

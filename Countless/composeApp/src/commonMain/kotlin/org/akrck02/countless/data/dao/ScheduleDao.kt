@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package org.akrck02.countless.data.dao
 
 import androidx.room.Dao
@@ -18,7 +20,10 @@ interface ScheduleDao {
     suspend fun findByAccountAndType(accountId: Int): MutableList<ScheduleEntity>
 
     @Query("SELECT * FROM schedule WHERE account_id = :accountId AND type = :type")
-    suspend fun findByAccountAndType(accountId: Int, type: ScheduleType): MutableList<ScheduleEntity>
+    suspend fun findByAccountAndType(
+        accountId: Int,
+        type: ScheduleType
+    ): MutableList<ScheduleEntity>
 
     @Update
     suspend fun update(scheduleEntity: ScheduleEntity)

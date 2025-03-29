@@ -60,7 +60,9 @@ fun <T> TabBar(
                             fontSize = 5.em,
                             fontWeight = FontWeight.Normal,
                             textAlign = TextAlign.Center,
-                            color = if (selected) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurfaceVariant.modify(.5f),
+                            color = if (selected) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurfaceVariant.modify(
+                                .5f
+                            ),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .widthIn(100.dp, 1000.dp)
@@ -81,41 +83,51 @@ fun <T> MinimalTabBar(
     onSelected: (T) -> Unit
 ) {
 
-    Row(
-        modifier = Modifier
-            .horizontalScroll(rememberScrollState())
-            .fillMaxWidth()
-            .padding(horizontal = 50.dp, vertical = 25.dp)
+    Surface(
+        modifier = Modifier.fillMaxWidth()
     ) {
-        items.keys.forEach { key ->
 
-            val item = items[key] ?: return@forEach
-            val selected = item == selected
-            Column(modifier = Modifier.padding(horizontal = 5.dp)) {
-                Surface(
-                    shape = TOTAL_ROUNDED_SHAPE,
-                    color = _root_ide_package_.androidx.compose.ui.graphics.Color(0, 0, 0, 0),
-                    modifier = Modifier.clickable(indication = null, interactionSource = remember { MutableInteractionSource() }) {
-                        onSelected(item)
-                    }
-                ) {
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .padding(horizontal = 3.dp)
-                            .height(35.dp)
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .horizontalScroll(rememberScrollState())
+                .fillMaxWidth()
+                .padding(horizontal = 50.dp, vertical = 25.dp)
+        ) {
+            items.keys.forEach { key ->
+
+                val item = items[key] ?: return@forEach
+                val isSelected = item == selected
+                Column(modifier = Modifier.padding(horizontal = 5.dp)) {
+                    Surface(
+                        shape = TOTAL_ROUNDED_SHAPE,
+                        // color = _root_ide_package_.androidx.compose.ui.graphics.Color(0, 0, 0, 0),
+                        modifier = Modifier.clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }) {
+                            onSelected(item)
+                        }
                     ) {
-                        Text(
-                            text = key,
-                            fontSize = 7.em,
-                            fontWeight = FontWeight.Normal,
-                            textAlign = TextAlign.Center,
-                            color = if (selected) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurfaceVariant.modify(.5f),
+                        Column(
+                            verticalArrangement = Arrangement.Center,
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .widthIn(40.dp, 1000.dp)
-                                .padding()
-                        )
+                                .padding(horizontal = 3.dp)
+                                .height(35.dp)
+                        ) {
+                            Text(
+                                text = key,
+                                fontSize = 7.em,
+                                fontWeight = FontWeight.Normal,
+                                textAlign = TextAlign.Center,
+                                color = if (isSelected) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurfaceVariant.modify(
+                                    .5f
+                                ),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .widthIn(40.dp, 1000.dp)
+                                    .padding()
+                            )
+                        }
                     }
                 }
             }
