@@ -143,14 +143,13 @@ fun BottomNavigationBar(appViewModel: AppViewModel) {
                 }
             }
         }
-    ) { _ ->
-
+    ) {
         NavHost(
             navController = navController,
             startDestination = StatsRoute,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(0.dp)
+                .padding(bottom = it.calculateBottomPadding())
         ) {
 
             statsRoute(navController)

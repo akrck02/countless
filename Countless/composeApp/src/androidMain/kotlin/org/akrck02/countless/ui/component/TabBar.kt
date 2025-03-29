@@ -101,7 +101,7 @@ fun <T> MinimalTabBar(
                 Column(modifier = Modifier.padding(horizontal = 5.dp)) {
                     Surface(
                         shape = TOTAL_ROUNDED_SHAPE,
-                        // color = _root_ide_package_.androidx.compose.ui.graphics.Color(0, 0, 0, 0),
+                        color = _root_ide_package_.androidx.compose.ui.graphics.Color(0, 0, 0, 0),
                         modifier = Modifier.clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }) {

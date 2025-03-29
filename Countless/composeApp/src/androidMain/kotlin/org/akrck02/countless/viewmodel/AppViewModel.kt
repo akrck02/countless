@@ -8,7 +8,6 @@ import org.akrck02.countless.data.model.data.Account
 import org.akrck02.countless.data.repository.AccountRepository
 
 private const val DEFAULT_ACCOUNT_ID = 1
-private const val DEFAULT_ACCOUNT_NAME = "your account"
 
 class AppViewModel(
     private val accountRepository: AccountRepository,
@@ -19,13 +18,12 @@ class AppViewModel(
 
     init {
         viewModelScope.launch {
-            loadBasicAccountData()
-
+            loadAccountDataIfPresent()
             financialProcessor.sync()
         }
     }
 
-    private suspend fun loadBasicAccountData() {
+    private suspend fun loadAccountDataIfPresent() {
 
         // The account already loaded
         if (null != currentAccount) return
@@ -33,10 +31,5 @@ class AppViewModel(
         // Find if the account exists, create otherwise.
         currentAccount = accountRepository.find(DEFAULT_ACCOUNT_ID)
 
-        // The account already loaded
-        if (null != currentAccount) return
-
-        // Create new account
-        accountRepository.create(Account(name = DEFAULT_ACCOUNT_NAME))
     }
 }

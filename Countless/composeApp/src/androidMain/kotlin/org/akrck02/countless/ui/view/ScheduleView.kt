@@ -2,7 +2,6 @@ package org.akrck02.countless.ui.view
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,52 +35,11 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.androidx.compose.koinViewModel
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ScheduleView(
     navController: NavHostController,
     viewModel: ScheduleViewModel = koinViewModel()
-) {
-
-    Column(
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(
-                top = 0.dp,
-                bottom = 100.dp,
-            )
-    ) {
-        SectionTitle(
-            text = stringResource(Res.string.schedule_title),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 60.dp, bottom = 10.dp)
-        )
-
-        Row(horizontalArrangement = Arrangement.Center) {
-            MinimalInfoCard(stringResource(Res.string.income_title), "30,970€")
-            MinimalInfoCard(stringResource(Res.string.outcome_title), "11,207.99€")
-        }
-
-        var selectedPeriod by remember { mutableStateOf(Period.Month) }
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .padding(top = 5.dp)
-                .fillMaxWidth()
-        ) {
-            ScheduledWallet(viewModel, selectedPeriod)
-        }
-
-    }
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun ScheduledWallet(
-    viewModel: ScheduleViewModel,
-    selectedPeriod: Period,
 ) {
 
     var selectedTransactionType by remember { mutableStateOf(TransactionType.All) }
@@ -92,21 +50,34 @@ fun ScheduledWallet(
     )
 
     var transactions: List<FinancialTransaction> by remember { mutableStateOf(listOf()) }
-
     LazyColumn(
         userScrollEnabled = true,
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .padding(top = 5.dp)
             .fillMaxSize()
     ) {
+        item {
+            SectionTitle(
+                text = stringResource(Res.string.schedule_title),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 60.dp, bottom = 10.dp)
+            )
 
-        stickyHeader {
+            Row(horizontalArrangement = Arrangement.Center) {
+                MinimalInfoCard(stringResource(Res.string.income_title), "30,970€")
+                MinimalInfoCard(stringResource(Res.string.outcome_title), "11,207.99€")
+            }
+
+            var selectedPeriod by remember { mutableStateOf(Period.Month) }
             MinimalTabBar(options, selectedTransactionType) {
                 selectedTransactionType = it
                 transactions =
                     viewModel.getScheduledTransactions(selectedTransactionType, selectedPeriod)
             }
         }
+
         items(transactions) {
             TransactionCard(
                 name = it.name ?: "",
@@ -115,6 +86,8 @@ fun ScheduledWallet(
                 color = MaterialTheme.colorScheme.error
             )
         }
-    }
 
+    }
 }
+
+
