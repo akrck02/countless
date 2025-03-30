@@ -7,7 +7,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import org.akrck02.countless.data.model.entity.FinancialTransactionEntity
+import org.akrck02.countless.data.entity.FinancialTransactionEntity
 
 @Dao
 interface FinancialTransactionDao {

@@ -23,8 +23,8 @@ import org.akrck02.countless.system.biometric.Biometrics
 import org.akrck02.countless.ui.menu.BottomNavigationBar
 import org.akrck02.countless.ui.theme.getSystemThemeColors
 import org.akrck02.countless.ui.view.LockView
+import org.akrck02.countless.ui.view.tutorial.TutorialView
 import org.akrck02.countless.viewmodel.AppViewModel
-import org.akrck02.countless.viewmodel.TutorialView
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.androidx.compose.koinViewModel

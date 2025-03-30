@@ -34,10 +34,10 @@ import countless.composeapp.generated.resources.financial_goal_progress_template
 import countless.composeapp.generated.resources.financial_goal_progress_text_template
 import kotlinx.coroutines.delay
 import org.akrck02.countless.data.extension.defaultDigitFormat
-import org.akrck02.countless.data.model.data.FinancialGoal
-import org.akrck02.countless.data.model.data.getCurrentProgress
-import org.akrck02.countless.data.model.data.getCurrentProgressPercent
-import org.akrck02.countless.data.model.data.getHumanReadableEstimatedTimeDate
+import org.akrck02.countless.data.model.FinancialGoal
+import org.akrck02.countless.data.model.getCurrentProgress
+import org.akrck02.countless.data.model.getCurrentProgressPercent
+import org.akrck02.countless.data.model.getHumanReadableEstimatedTimeDate
 import org.akrck02.countless.ui.extension.modify
 import org.akrck02.countless.ui.theme.MEDIUM_ROUNDED_SHAPE
 import org.jetbrains.compose.resources.stringResource

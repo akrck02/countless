@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.akrck02.countless.data.FinancialProcessor
-import org.akrck02.countless.data.model.data.Account
+import org.akrck02.countless.data.model.Account
 import org.akrck02.countless.data.repository.AccountRepository
 
 private const val DEFAULT_ACCOUNT_ID = 1

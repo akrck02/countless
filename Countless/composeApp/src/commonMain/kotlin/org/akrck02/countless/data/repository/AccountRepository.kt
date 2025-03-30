@@ -4,9 +4,9 @@ package org.akrck02.countless.data.repository
 
 import org.akrck02.countless.data.dao.AccountDao
 import org.akrck02.countless.data.extension.assertPositive
-import org.akrck02.countless.data.model.data.Account
-import org.akrck02.countless.data.model.entity.toEntity
-import org.akrck02.countless.data.model.entity.toModel
+import org.akrck02.countless.data.model.Account
+import org.akrck02.countless.data.entity.toEntity
+import org.akrck02.countless.data.entity.toModel
 
 
 private const val ACCOUNT_ID = "account id"

@@ -4,7 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import org.akrck02.countless.data.model.data.FinancialGoal
+import org.akrck02.countless.data.model.FinancialGoal
 import org.akrck02.countless.data.repository.AccountRepository
 import org.akrck02.countless.data.repository.FinancialGoalRepository
 

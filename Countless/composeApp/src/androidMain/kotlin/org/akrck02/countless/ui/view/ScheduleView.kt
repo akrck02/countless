@@ -23,7 +23,7 @@ import countless.composeapp.generated.resources.income_title
 import countless.composeapp.generated.resources.outcome_title
 import countless.composeapp.generated.resources.schedule_title_template
 import org.akrck02.countless.data.extension.asDate
-import org.akrck02.countless.data.model.data.FinancialTransaction
+import org.akrck02.countless.data.model.FinancialTransaction
 import org.akrck02.countless.ui.component.MinimalInfoCard
 import org.akrck02.countless.ui.component.MinimalTabBar
 import org.akrck02.countless.ui.component.SectionTitle

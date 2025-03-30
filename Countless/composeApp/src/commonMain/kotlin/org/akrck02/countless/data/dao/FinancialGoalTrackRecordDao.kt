@@ -6,7 +6,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import org.akrck02.countless.data.model.entity.FinancialGoalTrackRecordEntity
+import org.akrck02.countless.data.entity.FinancialGoalTrackRecordEntity
 
 @Dao
 interface FinancialGoalTrackRecordDao {

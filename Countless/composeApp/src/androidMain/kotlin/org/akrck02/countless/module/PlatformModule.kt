@@ -13,6 +13,7 @@ import org.akrck02.countless.viewmodel.AppViewModel
 import org.akrck02.countless.viewmodel.GoalsViewModel
 import org.akrck02.countless.viewmodel.ScheduleViewModel
 import org.akrck02.countless.viewmodel.StatsViewModel
+import org.akrck02.countless.viewmodel.TutorialViewModel
 import org.akrck02.countless.viewmodel.WalletViewModel
 import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.singleOf
@@ -73,4 +74,5 @@ val appModule = module {
     viewModelOf(::WalletViewModel)
     viewModelOf(::ScheduleViewModel)
     viewModelOf(::GoalsViewModel)
+    viewModelOf(::TutorialViewModel)
 }

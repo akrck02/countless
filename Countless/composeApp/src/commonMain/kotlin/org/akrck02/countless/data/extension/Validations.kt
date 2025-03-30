@@ -2,8 +2,8 @@
 
 package org.akrck02.countless.data.extension
 
-import org.akrck02.countless.data.model.exception.ErrorCode
-import org.akrck02.countless.data.model.exception.ServiceException
+import org.akrck02.countless.data.exception.ErrorCode
+import org.akrck02.countless.data.exception.ServiceException
 
 
 fun Any?.assertNotNull(name: String = "value") {

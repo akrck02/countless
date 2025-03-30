@@ -1,4 +1,4 @@
-package org.akrck02.countless.data.model.data
+package org.akrck02.countless.data.model
 
 class FinancialGoalTrackRecord(
     var id: Int? = null,

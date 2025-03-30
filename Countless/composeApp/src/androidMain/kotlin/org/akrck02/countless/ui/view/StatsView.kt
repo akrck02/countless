@@ -40,7 +40,7 @@ import countless.composeapp.generated.resources.stats_savings_title
 import countless.composeapp.generated.resources.stats_spend_more_template
 import org.akrck02.countless.data.extension.asDate
 import org.akrck02.countless.data.extension.defaultDigitFormat
-import org.akrck02.countless.data.model.data.getCurrentProgress
+import org.akrck02.countless.data.model.getCurrentProgress
 import org.akrck02.countless.ui.extension.modify
 import org.akrck02.countless.ui.theme.MIN_ROUNDED_SHAPE
 import org.akrck02.countless.viewmodel.StatsViewModel

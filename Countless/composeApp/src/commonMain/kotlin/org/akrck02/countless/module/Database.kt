@@ -11,11 +11,11 @@ import org.akrck02.countless.data.dao.FinancialGoalDao
 import org.akrck02.countless.data.dao.FinancialGoalTrackRecordDao
 import org.akrck02.countless.data.dao.FinancialTransactionDao
 import org.akrck02.countless.data.dao.ScheduleDao
-import org.akrck02.countless.data.model.entity.AccountEntity
-import org.akrck02.countless.data.model.entity.FinancialGoalEntity
-import org.akrck02.countless.data.model.entity.FinancialGoalTrackRecordEntity
-import org.akrck02.countless.data.model.entity.FinancialTransactionEntity
-import org.akrck02.countless.data.model.entity.ScheduleEntity
+import org.akrck02.countless.data.entity.AccountEntity
+import org.akrck02.countless.data.entity.FinancialGoalEntity
+import org.akrck02.countless.data.entity.FinancialGoalTrackRecordEntity
+import org.akrck02.countless.data.entity.FinancialTransactionEntity
+import org.akrck02.countless.data.entity.ScheduleEntity
 
 @Database(
     exportSchema = true,

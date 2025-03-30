@@ -1,7 +1,7 @@
 package org.akrck02.countless.viewmodel
 
 import androidx.lifecycle.ViewModel
-import org.akrck02.countless.data.model.data.FinancialGoal
+import org.akrck02.countless.data.model.FinancialGoal
 import org.akrck02.countless.data.repository.FinancialGoalRepository
 import java.util.UUID
 import kotlin.random.Random

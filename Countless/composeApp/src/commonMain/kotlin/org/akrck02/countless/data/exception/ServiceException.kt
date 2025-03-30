@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package org.akrck02.countless.data.model.exception
+package org.akrck02.countless.data.exception
 
 class ServiceException(
     val code: ErrorCode = ErrorCode.UNKNOWN,

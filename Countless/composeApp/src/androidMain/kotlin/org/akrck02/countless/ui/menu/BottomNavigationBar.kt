@@ -46,14 +46,16 @@ import org.akrck02.countless.ui.navigation.GoalsRoute
 import org.akrck02.countless.ui.navigation.ScheduleRoute
 import org.akrck02.countless.ui.navigation.StatsRoute
 import org.akrck02.countless.ui.navigation.WalletRoute
-import org.akrck02.countless.ui.navigation.goalsRoute
 import org.akrck02.countless.ui.navigation.navigateSecurely
-import org.akrck02.countless.ui.navigation.scheduleRoute
-import org.akrck02.countless.ui.navigation.statsRoute
-import org.akrck02.countless.ui.navigation.walletRoute
+import org.akrck02.countless.ui.navigation.show
 import org.akrck02.countless.ui.theme.DEFAULT_ROUNDED_SHAPE
+import org.akrck02.countless.ui.view.GoalsView
+import org.akrck02.countless.ui.view.ScheduleView
+import org.akrck02.countless.ui.view.StatsView
+import org.akrck02.countless.ui.view.WalletView
 import org.akrck02.countless.viewmodel.AppViewModel
 import org.jetbrains.compose.resources.stringResource
+
 
 //@OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -151,12 +153,10 @@ fun BottomNavigationBar(appViewModel: AppViewModel) {
                 .fillMaxSize()
                 .padding(bottom = it.calculateBottomPadding())
         ) {
-
-            statsRoute(navController)
-            walletRoute(navController)
-            scheduleRoute(navController)
-            goalsRoute(navController)
-
+            show<StatsRoute>(navController) { StatsView(it) }
+            show<WalletRoute>(navController) { WalletView(it) }
+            show<ScheduleRoute>(navController) { ScheduleView(it) }
+            show<GoalsRoute>(navController) { GoalsView(it) }
         }
 
     }

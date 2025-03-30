@@ -7,7 +7,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import org.akrck02.countless.data.model.entity.ScheduleEntity
+import org.akrck02.countless.data.entity.ScheduleEntity
 import org.akrck02.countless.data.model.option.ScheduleType
 
 @Dao

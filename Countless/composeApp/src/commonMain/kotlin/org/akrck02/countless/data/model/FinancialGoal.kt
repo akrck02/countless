@@ -1,7 +1,9 @@
-package org.akrck02.countless.data.model.data
+package org.akrck02.countless.data.model
 
+import kotlinx.serialization.Serializable
 import kotlin.math.min
 
+@Serializable
 data class FinancialGoal(
     var id: Int? = null,
     var accountId: Int? = null,

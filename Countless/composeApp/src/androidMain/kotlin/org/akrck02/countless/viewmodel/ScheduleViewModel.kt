@@ -1,7 +1,7 @@
 package org.akrck02.countless.viewmodel
 
 import androidx.lifecycle.ViewModel
-import org.akrck02.countless.data.model.data.FinancialTransaction
+import org.akrck02.countless.data.model.FinancialTransaction
 import org.akrck02.countless.ui.options.Period
 import org.akrck02.countless.ui.options.TransactionType
 

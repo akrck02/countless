@@ -1,6 +1,6 @@
 package org.akrck02.countless.data
 
-import org.akrck02.countless.data.model.data.FinancialGoal
+import org.akrck02.countless.data.model.FinancialGoal
 import java.sql.Timestamp
 
 class FinancialProcessor {

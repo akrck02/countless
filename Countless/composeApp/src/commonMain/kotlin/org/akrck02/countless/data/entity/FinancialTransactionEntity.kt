@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package org.akrck02.countless.data.model.entity
+package org.akrck02.countless.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 import org.akrck02.countless.data.extension.assertNotBlank
 import org.akrck02.countless.data.extension.assertNullOrPositive
 import org.akrck02.countless.data.extension.assertPositive
-import org.akrck02.countless.data.model.data.FinancialTransaction
+import org.akrck02.countless.data.model.FinancialTransaction
 
 @Entity(
     tableName = "financial_transaction",

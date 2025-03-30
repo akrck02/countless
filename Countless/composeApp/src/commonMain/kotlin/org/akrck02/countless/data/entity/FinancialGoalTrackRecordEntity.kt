@@ -1,4 +1,4 @@
-package org.akrck02.countless.data.model.entity
+package org.akrck02.countless.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -6,7 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import org.akrck02.countless.data.extension.assertNullOrPositive
 import org.akrck02.countless.data.extension.assertPositive
-import org.akrck02.countless.data.model.data.FinancialGoalTrackRecord
+import org.akrck02.countless.data.model.FinancialGoalTrackRecord
 
 @Entity(
     tableName = "financial_goal_track_record",

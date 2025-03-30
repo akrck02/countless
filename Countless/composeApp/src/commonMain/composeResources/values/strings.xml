@@ -44,24 +44,39 @@
     <string name="tutorial_greeting">Welcome to countless 👋🏻</string>
     <string name="tutorial_start_account_creation">Let's start creating your savings account.</string>
 
-    <string name="tutorial_step_2_title">Add a financial goal \uD83D\uDCB5</string>
-    <string name="tutorial_step_2_subtitle">Let's start planing some things.</string>
+    <string name="tutorial_create_account_title">Savings account</string>
+    <string name="tutorial_create_account_subtitle">Will help you manage your money</string>
+    <string name="tutorial_account_example_name">My savings account</string>
+
+    <string name="tutorial_create_goal_title">Add a financial goal \uD83D\uDCB5</string>
+    <string name="tutorial_create_goal_subtitle">We need to plan some things.</string>
 
     <string name="tutorial_goal_name_label">Name</string>
-    <string name="tutorial_goal_example_name">Buy a car</string>
+    <string name="tutorial_goal_example_name">Buy a car 🚗</string>
 
     <string name="tutorial_goal_target_date_label">Reach date (estimated)</string>
 
-    <string name="tutorial_goal_value_label">Value</string>
+    <string name="tutorial_goal_value_label">Price</string>
     <string name="tutorial_goal_example_value">40000</string>
 
-    <string name="tutorial_step_3_title">Let's add some rules 💰</string>
-    <string name="tutorial_step_3_subtitle">Everything in life has a limit.</string>
+    <string name="tutorial_set_limits_title">Let's add some rules 💰</string>
+    <string name="tutorial_set_limits_subtitle">Everything in life has a limit.</string>
 
     <string name="tutorial_goal_month_spend_limit_label">Month spend limit</string>
     <string name="tutorial_goal_example_month_spend_limit">300</string>
 
     <string name="tutorial_goal_month_savings_label">Month savings (estimated)</string>
     <string name="tutorial_goal_example_month_savings">300</string>
+
+    <string name="tutorial_preparing_app_title">Setting up your account</string>
+    <string name="tutorial_preparing_app_subtitle">Please wait a moment.</string>
+
+
+    <!-- ERRORS -->
+    <string name="name_must_not_be_blank">Write a name please.</string>
+    <string name="date_must_be_future">The date must be in the future.</string>
+    <string name="price_must_be_positive">Write a price.</string>
+    <string name="month_savings_must_be_positive">Write the month savings.</string>
+    <string name="month_spend_limit_must_be_positive">Write a limit.</string>
 
 </resources>
