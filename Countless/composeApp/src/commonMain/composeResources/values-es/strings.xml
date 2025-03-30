@@ -1,0 +1,81 @@
+<resources>
+    <string name="app_name">Countless</string>
+    <string name="app_subtitle">Ahorrar nunca fue tan fácil.</string>
+    <string name="app_author_template">Akrck02 - %1$s</string>
+
+    <string name="biometrics_title">Entrando a countless.</string>
+    <string name="biometrics_subtitle">Por favor introduzca su huella para acceder.</string>
+
+    <string name="stats_option">Estadisticas</string>
+    <string name="wallet_option">Cartera</string>
+    <string name="schedule_option">Planes</string>
+    <string name="goals_option">Objetivo</string>
+    <string name="year_selector_option">Año</string>
+    <string name="month_selector_option">Mes</string>
+    <string name="schedule_title_template">Programación del %1$s</string>
+    <string name="financial_goals_title">Objetivo financiero</string>
+    <string name="income_title">Ingresos</string>
+    <string name="outcome_title">Gastos</string>
+
+    <!-- BLOCK VIEW -->
+    <string name="fingerprint_message">Introduzca su huella dactilar para acceder.</string>
+
+    <!-- STATS_VIEW -->
+    <string name="stats_savings_title">Has ahorrado</string>
+    <string name="stats_savings_objective_title_template">de %1$s</string>
+    <string name="stats_ahead_of_budget_template">%1$s por encima del presupuesto.</string>
+    <string name="stats_behind_of_budget_template">%1$s por debajo del presupuesto.</string>
+    <string name="stats_spend_more_template">Puedes gastar %1$s mas este mes.</string>
+
+    <!-- FINANCIAL GOALS VIEW -->
+    <string name="financial_goal_current_goal">Objetivo actual</string>
+    <string name="financial_goal_progress_template">Progreso  - %1$s</string>
+    <string name="financial_goal_progress_text_template">%1$s de %2$s</string>
+    <string name="financial_goal_estimated_time_template">Tiempo estimado: %1$s</string>
+    <string name="financial_goal_month_limit">Limite mensual</string>
+    <string name="financial_goal_estimated_saving">Ahorro mensual estimado</string>
+
+    <!-- WALLET VIEW -->
+    <string name="wallet_transaction_type_all">Todo</string>
+    <string name="wallet_transaction_type_savings">Ingresos</string>
+    <string name="wallet_transaction_type_expenses">Gastos</string>
+
+    <!-- TUTORIAL VIEW -->
+    <string name="tutorial_greeting">Bienvenido/a a countless 👋🏻</string>
+    <string name="tutorial_start_account_creation">Empecemos creando tu cuenta de ahorro.</string>
+
+    <string name="tutorial_create_account_title">Cuenta de ahorro</string>
+    <string name="tutorial_create_account_subtitle">servirá para gestionar tu dinero.</string>
+    <string name="tutorial_account_example_name">Mi cuenta de ahorro</string>
+
+    <string name="tutorial_create_goal_title">Añade un objetivo \uD83D\uDCB5</string>
+    <string name="tutorial_create_goal_subtitle">Comencemos a planear algunas cosas.</string>
+
+    <string name="tutorial_goal_name_label">Nombre</string>
+    <string name="tutorial_goal_example_name">Comprarme un coche 🚗</string>
+
+    <string name="tutorial_goal_target_date_label">Fecha (estimada)</string>
+
+    <string name="tutorial_goal_value_label">Precio</string>
+    <string name="tutorial_goal_example_value">40000</string>
+
+    <string name="tutorial_set_limits_title">Añadamos algunas reglas 💰</string>
+    <string name="tutorial_set_limits_subtitle">Todo en esta vida tiene limites.</string>
+
+    <string name="tutorial_goal_month_spend_limit_label">Limite mensual de gasto</string>
+    <string name="tutorial_goal_example_month_spend_limit">300</string>
+
+    <string name="tutorial_goal_month_savings_label">Ahorro mensual (estimado)</string>
+    <string name="tutorial_goal_example_month_savings">300</string>
+
+    <string name="tutorial_preparing_app_title">Preparando tu cuenta</string>
+    <string name="tutorial_preparing_app_subtitle">Por favor espera un poco más.</string>
+
+    <!-- ERRORS -->
+    <string name="name_must_not_be_blank">Escribe un nombre por favor.</string>
+    <string name="date_must_be_future">La fecha debe ser futura.</string>
+    <string name="price_must_be_positive">Introduce un precio.</string>
+    <string name="month_savings_must_be_positive">Introduce un ahorro mensual.</string>
+    <string name="month_spend_limit_must_be_positive">Introduce un límite mensual.</string>
+
+</resources>

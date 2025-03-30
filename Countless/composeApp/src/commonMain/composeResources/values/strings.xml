@@ -1,0 +1,82 @@
+<resources>
+    <string name="app_name">Countless</string>
+    <string name="app_subtitle">The easy way of saving.</string>
+    <string name="app_author_template">Akrck02 - %1$s</string>
+
+    <string name="biometrics_title">Entering countless app.</string>
+    <string name="biometrics_subtitle">Please enter your fingerprint to access.</string>
+
+    <string name="stats_option">Stats</string>
+    <string name="wallet_option">Wallet</string>
+    <string name="schedule_option">Schedules</string>
+    <string name="goals_option">Goal</string>
+    <string name="year_selector_option">Year</string>
+    <string name="month_selector_option">Month</string>
+    <string name="schedule_title_template">%1$s schedule</string>
+    <string name="financial_goals_title">Financial goal</string>
+    <string name="income_title">Income</string>
+    <string name="outcome_title">Outcome</string>
+
+    <!-- BLOCK VIEW -->
+    <string name="fingerprint_message">Please enter your fingerprint to access.</string>
+
+    <!-- STATS VIEW -->
+    <string name="stats_savings_title">You have saved</string>
+    <string name="stats_savings_objective_title_template">of %1$s</string>
+    <string name="stats_ahead_of_budget_template">%1$s ahead of budget.</string>
+    <string name="stats_behind_of_budget_template">%1$s behind budget.</string>
+    <string name="stats_spend_more_template">You can spend %1$s more this month.</string>
+
+    <!-- FINANCIAL GOALS VIEW -->
+    <string name="financial_goal_current_goal">Current goal</string>
+    <string name="financial_goal_progress_template">Progress  - %1$s</string>
+    <string name="financial_goal_progress_text_template">%1$s of %2$s</string>
+    <string name="financial_goal_estimated_time_template">Estimated time: %1$s</string>
+    <string name="financial_goal_month_limit">Month limit</string>
+    <string name="financial_goal_estimated_saving">Expected monthly savings</string>
+
+    <!-- WALLET VIEW -->
+    <string name="wallet_transaction_type_all">All</string>
+    <string name="wallet_transaction_type_savings">Savings</string>
+    <string name="wallet_transaction_type_expenses">Expenses</string>
+
+    <!-- TUTORIAL VIEW -->
+    <string name="tutorial_greeting">Welcome to countless 👋🏻</string>
+    <string name="tutorial_start_account_creation">Let's start creating your savings account.</string>
+
+    <string name="tutorial_create_account_title">Savings account</string>
+    <string name="tutorial_create_account_subtitle">Will help you manage your money</string>
+    <string name="tutorial_account_example_name">My savings account</string>
+
+    <string name="tutorial_create_goal_title">Add a financial goal \uD83D\uDCB5</string>
+    <string name="tutorial_create_goal_subtitle">We need to plan some things.</string>
+
+    <string name="tutorial_goal_name_label">Name</string>
+    <string name="tutorial_goal_example_name">Buy a car 🚗</string>
+
+    <string name="tutorial_goal_target_date_label">Reach date (estimated)</string>
+
+    <string name="tutorial_goal_value_label">Price</string>
+    <string name="tutorial_goal_example_value">40000</string>
+
+    <string name="tutorial_set_limits_title">Let's add some rules 💰</string>
+    <string name="tutorial_set_limits_subtitle">Everything in life has a limit.</string>
+
+    <string name="tutorial_goal_month_spend_limit_label">Month spend limit</string>
+    <string name="tutorial_goal_example_month_spend_limit">300</string>
+
+    <string name="tutorial_goal_month_savings_label">Month savings (estimated)</string>
+    <string name="tutorial_goal_example_month_savings">300</string>
+
+    <string name="tutorial_preparing_app_title">Setting up your account</string>
+    <string name="tutorial_preparing_app_subtitle">Please wait a moment.</string>
+
+
+    <!-- ERRORS -->
+    <string name="name_must_not_be_blank">Write a name please.</string>
+    <string name="date_must_be_future">The date must be in the future.</string>
+    <string name="price_must_be_positive">Write a price.</string>
+    <string name="month_savings_must_be_positive">Write the month savings.</string>
+    <string name="month_spend_limit_must_be_positive">Write a limit.</string>
+
+</resources>
