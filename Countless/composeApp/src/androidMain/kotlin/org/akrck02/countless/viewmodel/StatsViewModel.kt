@@ -12,18 +12,5 @@ class StatsViewModel(
     private val accountRepository: AccountRepository,
     private val goalRepository: FinancialGoalRepository
 ) : ViewModel() {
-    var currentFinancialGoal by mutableStateOf(FinancialGoal().apply {
-        targetValue = 65000.00
-        currentValue = 35365.99
-        monthSpendLimit = 100.00
-        estimatedTimestamp = System.currentTimeMillis()
-    })
-
-    fun getBudgetDifference(): Double {
-        return 5123.00
-    }
-
-    fun getMonthBudgetExcess(): Double {
-        return currentFinancialGoal.monthSpendLimit
-    }
+    var currentFinancialGoal by mutableStateOf<FinancialGoal?>(null)
 }

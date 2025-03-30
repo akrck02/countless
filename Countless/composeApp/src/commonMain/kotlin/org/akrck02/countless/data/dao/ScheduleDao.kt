@@ -14,10 +14,10 @@ import org.akrck02.countless.data.model.option.ScheduleType
 interface ScheduleDao {
 
     @Query("SELECT * FROM schedule WHERE id = :scheduleId")
-    suspend fun find(scheduleId: Int): ScheduleEntity
+    suspend fun find(scheduleId: Int): ScheduleEntity?
 
     @Query("SELECT * FROM schedule WHERE account_id = :accountId")
-    suspend fun findByAccountAndType(accountId: Int): MutableList<ScheduleEntity>
+    suspend fun findByAccount(accountId: Int): MutableList<ScheduleEntity>
 
     @Query("SELECT * FROM schedule WHERE account_id = :accountId AND type = :type")
     suspend fun findByAccountAndType(

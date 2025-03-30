@@ -117,7 +117,7 @@ fun TutorialView(appViewModel: AppViewModel, tutorialViewModel: TutorialViewMode
             }
 
             show<PreparingAppStep>(navController = navController, enterDirection = Direction.LEFT, exitDirection = Direction.LEFT) {
-                PreparingAppStep(tutorialViewModel) { onFinish() }
+                PreparingAppStep(appViewModel, tutorialViewModel) { onFinish() }
             }
         }
     }

@@ -40,6 +40,23 @@ fun App(appViewModel: AppViewModel = koinViewModel()) {
         shapes = MaterialTheme.shapes
     ) {
 
+        var loaded = appViewModel.loaded
+        if (loaded.not()) {
+
+            Surface(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text("Loading")
+                }
+            }
+
+            return@MaterialTheme
+        }
+
         var justFinishedTutorial by remember { mutableStateOf(false) }
         if (appViewModel.isFirstTime() && justFinishedTutorial.not()) {
             TutorialView(appViewModel) {
@@ -70,23 +87,6 @@ fun App(appViewModel: AppViewModel = koinViewModel()) {
                     onError = { authenticated = false },
                     onSuccess = { authenticated = true }
                 )
-            }
-
-            return@MaterialTheme
-        }
-
-        var loaded = appViewModel.loaded
-        if (loaded.not()) {
-
-            Surface(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text("Loading")
-                }
             }
 
             return@MaterialTheme

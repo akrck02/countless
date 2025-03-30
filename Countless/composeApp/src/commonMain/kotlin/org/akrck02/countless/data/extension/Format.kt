@@ -1,8 +1,8 @@
 package org.akrck02.countless.data.extension
 
 import android.icu.text.DateFormat
+import android.icu.text.SimpleDateFormat
 import java.text.DecimalFormat
-import java.text.SimpleDateFormat
 
 fun Double?.defaultDigitFormat(): String {
 

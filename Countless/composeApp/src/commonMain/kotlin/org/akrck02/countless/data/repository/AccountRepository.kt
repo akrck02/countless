@@ -3,10 +3,10 @@
 package org.akrck02.countless.data.repository
 
 import org.akrck02.countless.data.dao.AccountDao
-import org.akrck02.countless.data.extension.assertPositive
-import org.akrck02.countless.data.model.Account
 import org.akrck02.countless.data.entity.toEntity
 import org.akrck02.countless.data.entity.toModel
+import org.akrck02.countless.data.extension.assertPositive
+import org.akrck02.countless.data.model.Account
 
 
 private const val ACCOUNT_ID = "account id"
@@ -26,7 +26,7 @@ class AccountRepository(
     }
 
     suspend fun create(account: Account) {
-        return accountDao.create(account.toEntity())
+        accountDao.create(account.toEntity())
     }
 
     suspend fun kill(account: Account) {

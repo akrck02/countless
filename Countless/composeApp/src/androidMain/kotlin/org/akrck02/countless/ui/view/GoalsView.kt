@@ -14,11 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import countless.composeapp.generated.resources.Res
 import countless.composeapp.generated.resources.financial_goals_title
 import org.akrck02.countless.ui.component.FinancialGoalCard
 import org.akrck02.countless.ui.component.SectionTitle
+import org.akrck02.countless.viewmodel.AppViewModel
 import org.akrck02.countless.viewmodel.GoalsViewModel
 import org.jetbrains.compose.resources.stringResource
 import org.koin.androidx.compose.koinViewModel
@@ -27,7 +27,7 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun GoalsView(
-    navController: NavHostController,
+    appViewModel: AppViewModel,
     viewModel: GoalsViewModel = koinViewModel()
 ) {
 
@@ -52,10 +52,9 @@ fun GoalsView(
                 .padding(top = 80.dp, bottom = 30.dp)
         )
 
-        viewModel.financialGoal?.also {
+        appViewModel.currentFinancialGoal?.also {
             FinancialGoalCard(it)
         }
-
     }
 }
 

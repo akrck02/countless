@@ -13,7 +13,7 @@ import org.akrck02.countless.data.entity.FinancialGoalEntity
 interface FinancialGoalDao {
 
     @Query("SELECT * FROM FINANCIAL_GOAL WHERE id = :financialGoalId")
-    suspend fun find(financialGoalId: Int): FinancialGoalEntity
+    suspend fun find(financialGoalId: Int): FinancialGoalEntity?
 
     @Query("SELECT * FROM FINANCIAL_GOAL WHERE account_id = :accountId")
     suspend fun findByAccount(accountId: Int): MutableList<FinancialGoalEntity>

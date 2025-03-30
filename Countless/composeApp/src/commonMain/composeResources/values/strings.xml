@@ -8,12 +8,12 @@
 
     <string name="stats_option">Stats</string>
     <string name="wallet_option">Wallet</string>
-    <string name="schedule_option">Schedule</string>
-    <string name="goals_option">Goals</string>
+    <string name="schedule_option">Schedules</string>
+    <string name="goals_option">Goal</string>
     <string name="year_selector_option">Year</string>
     <string name="month_selector_option">Month</string>
     <string name="schedule_title_template">%1$s schedule</string>
-    <string name="financial_goals_title">Financial goals</string>
+    <string name="financial_goals_title">Financial goal</string>
     <string name="income_title">Income</string>
     <string name="outcome_title">Outcome</string>
 

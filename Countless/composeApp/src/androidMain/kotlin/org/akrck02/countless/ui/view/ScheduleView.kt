@@ -1,7 +1,6 @@
 package org.akrck02.countless.ui.view
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,12 +16,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import countless.composeapp.generated.resources.Res
 import countless.composeapp.generated.resources.income_title
 import countless.composeapp.generated.resources.outcome_title
 import countless.composeapp.generated.resources.schedule_title_template
 import org.akrck02.countless.data.extension.asDate
+import org.akrck02.countless.data.extension.defaultDigitFormat
 import org.akrck02.countless.data.model.FinancialTransaction
 import org.akrck02.countless.ui.component.MinimalInfoCard
 import org.akrck02.countless.ui.component.MinimalTabBar
@@ -30,6 +29,7 @@ import org.akrck02.countless.ui.component.SectionTitle
 import org.akrck02.countless.ui.component.TransactionCard
 import org.akrck02.countless.ui.options.Period
 import org.akrck02.countless.ui.options.TransactionType
+import org.akrck02.countless.viewmodel.AppViewModel
 import org.akrck02.countless.viewmodel.ScheduleViewModel
 import org.jetbrains.compose.resources.stringResource
 import org.koin.androidx.compose.koinViewModel
@@ -38,7 +38,7 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ScheduleView(
-    navController: NavHostController,
+    appViewModel: AppViewModel,
     viewModel: ScheduleViewModel = koinViewModel()
 ) {
 
@@ -68,16 +68,19 @@ fun ScheduleView(
                 selectedPeriod = if (selectedPeriod == Period.Month) Period.Year else Period.Month
             }
 
-            Row(horizontalArrangement = Arrangement.Center) {
-                MinimalInfoCard(stringResource(Res.string.income_title), "30,970€")
-                MinimalInfoCard(stringResource(Res.string.outcome_title), "11,207.99€")
+            var income = if (selectedPeriod == Period.Month) appViewModel.financialProcessor.monthIncome else appViewModel.financialProcessor.yearIncome
+            var outcome = if (selectedPeriod == Period.Month) appViewModel.financialProcessor.monthOutcome else appViewModel.financialProcessor.yearOutcome
+            Row {
+                MinimalInfoCard(stringResource(Res.string.income_title), "${income.defaultDigitFormat()}€")
+                MinimalInfoCard(stringResource(Res.string.outcome_title), "${outcome.defaultDigitFormat()}€")
             }
 
             MinimalTabBar(options, selectedTransactionType) {
                 selectedTransactionType = it
                 transactions =
-                    viewModel.getScheduledTransactions(selectedTransactionType, selectedPeriod)
+                    viewModel.getScheduledTransactions(appViewModel.currentAccount?.id ?: 1, selectedTransactionType, selectedPeriod)
             }
+
         }
 
         items(transactions) {

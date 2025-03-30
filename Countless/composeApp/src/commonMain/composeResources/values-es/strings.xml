@@ -8,12 +8,12 @@
 
     <string name="stats_option">Estadisticas</string>
     <string name="wallet_option">Cartera</string>
-    <string name="schedule_option">Programación</string>
-    <string name="goals_option">Objetivos</string>
+    <string name="schedule_option">Planes</string>
+    <string name="goals_option">Objetivo</string>
     <string name="year_selector_option">Año</string>
     <string name="month_selector_option">Mes</string>
     <string name="schedule_title_template">Programación del %1$s</string>
-    <string name="financial_goals_title">Objetivos financieros</string>
+    <string name="financial_goals_title">Objetivo financiero</string>
     <string name="income_title">Ingresos</string>
     <string name="outcome_title">Gastos</string>
 

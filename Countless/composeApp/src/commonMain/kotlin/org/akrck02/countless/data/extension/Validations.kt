@@ -11,7 +11,7 @@ fun Any?.assertNotNull(name: String = "value") {
 }
 
 fun String?.assertNotBlank(name: String = "value") {
-    this.takeIf { it.isNullOrBlank() } ?: throw ServiceException(ErrorCode.MUST_NOT_BE_BLANK, ErrorCode.MUST_NOT_BE_BLANK.message.format(name))
+    this.takeIf { it.isNullOrBlank().not() } ?: throw ServiceException(ErrorCode.MUST_NOT_BE_BLANK, ErrorCode.MUST_NOT_BE_BLANK.message.format(name))
 }
 
 fun Int?.assertPositive(name: String = "value") {

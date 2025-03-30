@@ -177,7 +177,7 @@ fun FinancialGoalCard(financialGoal: FinancialGoal, animationIndex: Int = 1) {
         )
 
         Text(
-            text = financialGoal.monthSavings.defaultDigitFormat(),
+            text = financialGoal.monthSpendLimit.defaultDigitFormat(),
             fontSize = 14.sp,
             fontWeight = FontWeight.W500,
             textAlign = TextAlign.Left,
@@ -210,7 +210,7 @@ fun FinancialGoalCard(financialGoal: FinancialGoal, animationIndex: Int = 1) {
         )
 
         Text(
-            text = financialGoal.monthSpendLimit.defaultDigitFormat(),
+            text = financialGoal.monthSavings.defaultDigitFormat(),
             fontSize = 14.sp,
             fontWeight = FontWeight.W500,
             textAlign = TextAlign.Left,
