@@ -9,16 +9,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Autorenew
 import androidx.compose.material.icons.rounded.BarChart
 import androidx.compose.material.icons.rounded.Flag
-import androidx.compose.material.icons.rounded.Payments
 import androidx.compose.material.icons.rounded.Wallet
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
@@ -53,7 +50,6 @@ import org.akrck02.countless.ui.navigation.WalletRoute
 import org.akrck02.countless.ui.navigation.navigateSecurely
 import org.akrck02.countless.ui.navigation.show
 import org.akrck02.countless.ui.theme.DEFAULT_ROUNDED_SHAPE
-import org.akrck02.countless.ui.theme.MEDIUM_ROUNDED_SHAPE
 import org.akrck02.countless.ui.view.GoalsView
 import org.akrck02.countless.ui.view.ScheduleView
 import org.akrck02.countless.ui.view.StatsView
@@ -81,35 +77,7 @@ fun BottomNavigationBar(appViewModel: AppViewModel) {
         modifier = Modifier.fillMaxSize(),
         containerColor = MaterialTheme.colorScheme.background,
         floatingActionButton = {
-            if (addMenuOpen) {
-                Surface(
-                    shape = MEDIUM_ROUNDED_SHAPE,
-                    color = Color.Transparent, //MaterialTheme.colorScheme.surfaceContainer,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(120.dp)
-                            .padding(10.dp)
-                            .offset(x = 0.dp)
-                    ) {
-
-                        AddMenuOption(
-                            label = "transacción",
-                            icon = Icons.Rounded.Payments
-                        )
-                        AddMenuOption(
-                            label = "plan",
-                            icon = Icons.Rounded.Autorenew
-                        )
-                    }
-
-                }
-            }
+            if (addMenuOpen) AddMenuBar()
         },
         floatingActionButtonPosition = FabPosition.Center,
         bottomBar = {
@@ -211,43 +179,6 @@ fun BottomNavigationBar(appViewModel: AppViewModel) {
     }
 }
 
-@Composable
-private fun AddMenuOption(
-    label: String = "label",
-    icon: ImageVector = Icons.Rounded.Add
-) {
-    Surface(
-        shape = MEDIUM_ROUNDED_SHAPE,
-        color = MaterialTheme.colorScheme.surfaceContainerHigh,
-        modifier = Modifier
-            .padding(horizontal = 10.dp, vertical = 5.dp)
-            .height(85.dp)
-            .width(110.dp)
-        //  .border(2.dp, MaterialTheme.colorScheme.onSurface.modify(.4f), MEDIUM_ROUNDED_SHAPE)
-    ) {
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .padding(horizontal = 10.dp)
-                .fillMaxSize()
-        ) {
-
-            Icon(
-                imageVector = icon,
-                tint = MaterialTheme.colorScheme.onSurface.modify(.8f),
-                contentDescription = null
-            )
-            Text(
-                text = label,
-                fontSize = 12.sp,
-                modifier = Modifier.padding(top = 5.dp),
-                color = MaterialTheme.colorScheme.onSurface.modify(.8f)
-            )
-
-        }
-    }
-}
 
 @Composable
 private fun BottomNavigationBarOption(

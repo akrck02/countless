@@ -5,15 +5,6 @@ import androidx.sqlite.SQLiteConnection
 import androidx.sqlite.execSQL
 
 
-fun dbMigration(v1: Int, v2: Int, sql: List<String>) = object : Migration(v1, v2) {
-    override fun migrate(connection: SQLiteConnection) {
-        sql.forEach {
-            connection.execSQL(it)
-        }
-    }
-}
-
-
 var DB_1_TO_2 = listOf("ALTER TABLE account ADD COLUMN name TEXT")
 
 var DB_2_to_3 = listOf(
@@ -77,3 +68,11 @@ var DB_3_to_4 = listOf(
     "ALTER TABLE schedule ALTER COLUMN name INTEGER NOT NULL;",
     "ALTER TABLE schedule ALTER COLUMN start_timestamp INTEGER NOT NULL;",
 )
+
+fun dbMigration(v1: Int, v2: Int, sql: List<String>) = object : Migration(v1, v2) {
+    override fun migrate(connection: SQLiteConnection) {
+        sql.forEach {
+            connection.execSQL(it)
+        }
+    }
+}
