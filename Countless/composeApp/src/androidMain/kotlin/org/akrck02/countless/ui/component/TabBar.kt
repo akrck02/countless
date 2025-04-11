@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import org.akrck02.countless.ui.extension.modify
 import org.akrck02.countless.ui.theme.TOTAL_ROUNDED_SHAPE
@@ -36,7 +35,7 @@ fun <T> TabBar(
     Row(
         modifier = Modifier
             .horizontalScroll(rememberScrollState())
-            .padding(horizontal = 50.dp)
+            .padding(horizontal = 0.dp)
     ) {
         items.keys.forEach { key ->
 
@@ -44,7 +43,7 @@ fun <T> TabBar(
             val selected = item == selected
             Column(modifier = Modifier.padding(horizontal = 5.dp)) {
                 Surface(
-                    color = if (selected) MaterialTheme.colorScheme.surfaceContainerHighest else MaterialTheme.colorScheme.surfaceContainer,
+                    color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceContainer,
                     modifier = Modifier.padding(horizontal = 0.dp),
                     shape = TOTAL_ROUNDED_SHAPE,
                     onClick = { onSelected(item) }
@@ -58,15 +57,15 @@ fun <T> TabBar(
                     ) {
                         Text(
                             text = key,
-                            fontSize = 5.em,
+                            fontSize = 15.sp,
                             fontWeight = FontWeight.Normal,
                             textAlign = TextAlign.Center,
-                            color = if (selected) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurfaceVariant.modify(
+                            color = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant.modify(
                                 .5f
                             ),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .widthIn(100.dp, 1000.dp)
+                                .widthIn(60.dp, 1000.dp)
                                 .padding()
                         )
                     }

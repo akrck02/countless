@@ -7,9 +7,9 @@
     <string name="biometrics_subtitle">Por favor introduzca su huella para acceder.</string>
 
     <string name="stats_option">Estadisticas</string>
-    <string name="wallet_option">Cartera</string>
-    <string name="schedule_option">Planes</string>
+    <string name="wallet_option">Pagos</string>
     <string name="goals_option">Objetivo</string>
+    <string name="configuration_option">Ajustes</string>
     <string name="year_selector_option">Año</string>
     <string name="month_selector_option">Mes</string>
     <string name="schedule_title_template">Programación del %1$s</string>

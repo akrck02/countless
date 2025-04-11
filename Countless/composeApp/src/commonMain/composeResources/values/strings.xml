@@ -7,9 +7,9 @@
     <string name="biometrics_subtitle">Please enter your fingerprint to access.</string>
 
     <string name="stats_option">Stats</string>
-    <string name="wallet_option">Wallet</string>
-    <string name="schedule_option">Schedules</string>
+    <string name="wallet_option">Payments</string>
     <string name="goals_option">Goal</string>
+    <string name="configuration_option">Settings</string>
     <string name="year_selector_option">Year</string>
     <string name="month_selector_option">Month</string>
     <string name="schedule_title_template">%1$s schedule</string>
