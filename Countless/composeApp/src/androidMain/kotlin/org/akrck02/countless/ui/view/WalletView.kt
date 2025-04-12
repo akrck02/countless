@@ -4,15 +4,16 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.History
@@ -34,12 +35,16 @@ import androidx.compose.ui.unit.dp
 import countless.composeapp.generated.resources.Res
 import countless.composeapp.generated.resources.income_title
 import countless.composeapp.generated.resources.outcome_title
+import org.akrck02.countless.data.extension.asDate
 import org.akrck02.countless.data.extension.defaultDigitFormat
+import org.akrck02.countless.data.model.FinancialTransaction
 import org.akrck02.countless.ui.component.MinimalInfoCard
 import org.akrck02.countless.ui.component.SectionTitle
 import org.akrck02.countless.ui.component.TabBar
+import org.akrck02.countless.ui.component.TransactionCard
 import org.akrck02.countless.ui.extension.modify
 import org.akrck02.countless.ui.menu.AddTransactionDialogue
+import org.akrck02.countless.ui.options.Period
 import org.akrck02.countless.ui.options.TransactionType
 import org.akrck02.countless.viewmodel.AppViewModel
 import org.akrck02.countless.viewmodel.WalletViewModel
@@ -77,22 +82,7 @@ fun WalletView(
             )
         }
     ) {
-        Column(
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .fillMaxSize()
-                .padding(
-                    top = 10.dp,
-                    bottom = it.calculateBottomPadding(),
-                    start = 0.dp,
-                    end = 0.dp
-                )
-        ) {
-
-            Payments(appViewModel, selected)
-        }
+        Payments(it, appViewModel, selected)
     }
 
 
@@ -168,37 +158,58 @@ private fun MenuBar(
 }
 
 @Composable
-fun Payments(appViewModel: AppViewModel, selected: TransactionType) {
+fun Payments(values: PaddingValues, appViewModel: AppViewModel, selected: TransactionType) {
 
-    SectionTitle(
-        text = Calendar.getInstance().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) ?: "",
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 80.dp, bottom = 30.dp)
-    )
 
-    var income = appViewModel.financialProcessor.monthIncome
-    var outcome = appViewModel.financialProcessor.monthOutcome
-    Row {
-        MinimalInfoCard(stringResource(Res.string.income_title), "${income.defaultDigitFormat()}€")
-        MinimalInfoCard(stringResource(Res.string.outcome_title), "${outcome.defaultDigitFormat()}€")
-    }
-
+    var selectedPeriod by remember { mutableStateOf(Period.Month) }
+    var transactions: List<FinancialTransaction> by remember { mutableStateOf(listOf()) }
     when (selected) {
         TransactionType.All -> AllWallet()
         TransactionType.Savings -> SavingsWallet()
         TransactionType.Expenses -> ExpensesWallet()
     }
 
+    LazyColumn(
+        userScrollEnabled = true,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .padding(top = 5.dp)
+            .fillMaxSize()
+    ) {
+        item {
+            SectionTitle(
+                text = Calendar.getInstance().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) ?: "",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 80.dp, bottom = 30.dp)
+            )
+
+            var income = if (selectedPeriod == Period.Month) appViewModel.financialProcessor.monthIncome else appViewModel.financialProcessor.yearIncome
+            var outcome = if (selectedPeriod == Period.Month) appViewModel.financialProcessor.monthOutcome else appViewModel.financialProcessor.yearOutcome
+
+            Row {
+                MinimalInfoCard(stringResource(Res.string.income_title), "${income.defaultDigitFormat()}€")
+                MinimalInfoCard(stringResource(Res.string.outcome_title), "${outcome.defaultDigitFormat()}€")
+            }
+        }
+
+        items(transactions) {
+            TransactionCard(
+                name = it.name ?: "",
+                subLabel = it.timestamp.asDate(),
+                value = "${it.value}€",
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+
+    }
+
 }
 
 @Composable
 fun AllWallet() {
-    Column(modifier = Modifier.padding(top = 35.dp)) {
-        Row {
-            Text("ALL")
-        }
-    }
+
+
 }
 
 @Composable
