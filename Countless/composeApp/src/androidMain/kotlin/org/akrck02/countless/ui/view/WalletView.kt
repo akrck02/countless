@@ -22,7 +22,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,7 +43,6 @@ import org.akrck02.countless.ui.component.TabBar
 import org.akrck02.countless.ui.component.TransactionCard
 import org.akrck02.countless.ui.extension.modify
 import org.akrck02.countless.ui.menu.AddTransactionDialogue
-import org.akrck02.countless.ui.options.Period
 import org.akrck02.countless.ui.options.TransactionType
 import org.akrck02.countless.viewmodel.AppViewModel
 import org.akrck02.countless.viewmodel.WalletViewModel
@@ -60,12 +58,16 @@ fun WalletView(
     viewModel: WalletViewModel = koinViewModel()
 ) {
 
-    var scheduledSelected by remember { mutableStateOf(false) }
-    var showNewTransaction by remember { mutableStateOf(false) }
-    var selected by remember { mutableStateOf(TransactionType.All) }
+    val scheduleMode by remember { viewModel.scheduleMode }
+    val showNewTransaction by remember { viewModel.showNewTransaction }
+    val selectedTransactionType by remember { viewModel.selectedTransactionType }
+    val selectedPeriod by remember { viewModel.selectedPeriod }
+    val transactions: List<FinancialTransaction> by remember { viewModel.transactions }
+    val income by remember { viewModel.income }
+    val outcome by remember { viewModel.outcome }
 
     if (showNewTransaction) {
-        AddTransactionDialogue(scheduledSelected) { showNewTransaction = false }
+        AddTransactionDialogue(scheduleMode) { viewModel.hideNewTransactionPanel() }
     }
 
     Scaffold(
@@ -75,17 +77,21 @@ fun WalletView(
         floatingActionButtonPosition = FabPosition.Center,
         bottomBar = {
             MenuBar(
-                scheduledSelected,
-                onNewTransactionSelected = { showNewTransaction = true },
-                onScheduledSelected = { scheduledSelected = !scheduledSelected },
-                onOptionSelected = { selected = it }
+                scheduleMode,
+                onNewTransactionSelected = { viewModel.showNewTransactionPanel() },
+                onScheduledSelected = { viewModel.toggleScheduleMode() },
+                onOptionSelected = { viewModel.setSelectedTransactionType(it) }
             )
         }
     ) {
-        Payments(it, appViewModel, selected)
+        Payments(
+            viewModel,
+            it,
+            income,
+            outcome,
+            transactions
+        )
     }
-
-
 }
 
 @Composable
@@ -147,7 +153,9 @@ private fun MenuBar(
                         )
                 ) {
                     Icon(
-                        tint = if (scheduledSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.modify(.5f),
+                        tint = if (scheduledSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.modify(
+                            .5f
+                        ),
                         contentDescription = "History",
                         imageVector = Icons.Rounded.History
                     )
@@ -158,38 +166,39 @@ private fun MenuBar(
 }
 
 @Composable
-fun Payments(values: PaddingValues, appViewModel: AppViewModel, selected: TransactionType) {
-
-
-    var selectedPeriod by remember { mutableStateOf(Period.Month) }
-    var transactions: List<FinancialTransaction> by remember { mutableStateOf(listOf()) }
-    when (selected) {
-        TransactionType.All -> AllWallet()
-        TransactionType.Savings -> SavingsWallet()
-        TransactionType.Expenses -> ExpensesWallet()
-    }
+fun Payments(
+    viewModel: WalletViewModel,
+    padding: PaddingValues,
+    income: Double,
+    outcome: Double,
+    transactions: List<FinancialTransaction>
+) {
 
     LazyColumn(
         userScrollEnabled = true,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .padding(top = 5.dp)
+            .padding(bottom = padding.calculateBottomPadding())
             .fillMaxSize()
     ) {
         item {
             SectionTitle(
-                text = Calendar.getInstance().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) ?: "",
+                text = Calendar.getInstance()
+                    .getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) ?: "",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 80.dp, bottom = 30.dp)
             )
 
-            var income = if (selectedPeriod == Period.Month) appViewModel.financialProcessor.monthIncome else appViewModel.financialProcessor.yearIncome
-            var outcome = if (selectedPeriod == Period.Month) appViewModel.financialProcessor.monthOutcome else appViewModel.financialProcessor.yearOutcome
-
             Row {
-                MinimalInfoCard(stringResource(Res.string.income_title), "${income.defaultDigitFormat()}€")
-                MinimalInfoCard(stringResource(Res.string.outcome_title), "${outcome.defaultDigitFormat()}€")
+                MinimalInfoCard(
+                    stringResource(Res.string.income_title),
+                    "${income.defaultDigitFormat()}€"
+                )
+                MinimalInfoCard(
+                    stringResource(Res.string.outcome_title),
+                    "${outcome.defaultDigitFormat()}€"
+                )
             }
         }
 
@@ -204,28 +213,4 @@ fun Payments(values: PaddingValues, appViewModel: AppViewModel, selected: Transa
 
     }
 
-}
-
-@Composable
-fun AllWallet() {
-
-
-}
-
-@Composable
-fun SavingsWallet() {
-    Column(modifier = Modifier.padding(top = 35.dp)) {
-        Row {
-            Text("SAVINGS")
-        }
-    }
-}
-
-@Composable
-fun ExpensesWallet() {
-    Column(modifier = Modifier.padding(top = 35.dp)) {
-        Row {
-            Text("EXPENSES")
-        }
-    }
 }
