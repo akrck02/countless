@@ -1,5 +1,7 @@
 package org.akrck02.countless.ui.menu
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -24,13 +26,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,7 +45,9 @@ import org.akrck02.countless.ui.extension.modify
 import org.akrck02.countless.ui.navigation.GoalsRoute
 import org.akrck02.countless.ui.navigation.StatsRoute
 import org.akrck02.countless.ui.navigation.WalletRoute
+import org.akrck02.countless.ui.navigation.getCurrentRoute
 import org.akrck02.countless.ui.navigation.navigateSecurely
+import org.akrck02.countless.ui.navigation.serialName
 import org.akrck02.countless.ui.navigation.show
 import org.akrck02.countless.ui.theme.DEFAULT_ROUNDED_SHAPE
 import org.akrck02.countless.ui.view.GoalsView
@@ -59,13 +61,13 @@ import org.jetbrains.compose.resources.stringResource
 fun BottomNavigationBar(appViewModel: AppViewModel) {
 
     //initializing the default selected item
-    var navigationSelectedItem by remember { mutableIntStateOf(0) }
 
     /**
      * by using the rememberNavController()
      * we can get the instance of the navController
      */
     val navController = rememberNavController()
+    val selectedRoute = navController.getCurrentRoute()
 
 
     //scaffold to hold our bottom navigation Bar
@@ -93,45 +95,42 @@ fun BottomNavigationBar(appViewModel: AppViewModel) {
                         )
                     )
                 ) {
-                    val statsSelected = navigationSelectedItem == 0
+
+                    var statsSelected = false
+                    var walletSelected = false
+                    var goalsSelected = false
+                    val configurationSelected = false
+
+                    when (selectedRoute) {
+                        StatsRoute.serialName() -> statsSelected = true
+                        WalletRoute.serialName() -> walletSelected = true
+                        GoalsRoute.serialName() -> goalsSelected = true
+                        else -> statsSelected = true
+                    }
+
                     BottomNavigationBarOption(
                         label = stringResource(Res.string.stats_option),
                         icon = Icons.Rounded.BarChart,
                         selected = statsSelected,
-                    ) {
-                        navigationSelectedItem = 0
-                        navController.navigateSecurely(StatsRoute)
-                    }
+                    ) { navController.navigateSecurely(StatsRoute, appViewModel) }
 
-                    val walletSelected = navigationSelectedItem == 1
                     BottomNavigationBarOption(
                         label = stringResource(Res.string.wallet_option),
                         icon = Icons.Rounded.Payments,
                         selected = walletSelected,
-                    ) {
-                        navigationSelectedItem = 1
-                        navController.navigateSecurely(WalletRoute)
-                    }
+                    ) { navController.navigateSecurely(WalletRoute, appViewModel) }
 
-                    val goalsSelected = navigationSelectedItem == 3
                     BottomNavigationBarOption(
                         label = stringResource(Res.string.goals_option),
                         icon = Icons.Rounded.Flag,
                         selected = goalsSelected,
-                    ) {
-                        navigationSelectedItem = 3
-                        navController.navigateSecurely(GoalsRoute)
-                    }
+                    ) { navController.navigateSecurely(GoalsRoute, appViewModel) }
 
-                    val configurationSelected = navigationSelectedItem == 4
                     BottomNavigationBarOption(
                         label = stringResource(Res.string.configuration_option),
                         icon = Icons.Rounded.Tune,
                         selected = configurationSelected,
-                    ) {
-                        navigationSelectedItem = 4
-                        //navController.navigateSecurely(GoalsRoute)
-                    }
+                    ) { /*navController.navigateSecurely(GoalsRoute) */ }
 
                 }
             }
@@ -140,6 +139,13 @@ fun BottomNavigationBar(appViewModel: AppViewModel) {
         NavHost(
             navController = navController,
             startDestination = StatsRoute,
+            popExitTransition = {
+                scaleOut(
+                    targetScale = 0.8f,
+                    transformOrigin = TransformOrigin(pivotFractionX = 0.5f, pivotFractionY = 0.5f)
+                )
+            },
+            popEnterTransition = { EnterTransition.None },
             modifier = Modifier
                 .fillMaxSize()
                 .padding(bottom = it.calculateBottomPadding())

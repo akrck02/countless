@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -40,10 +41,10 @@ fun <T> TabBar(
         items.keys.forEach { key ->
 
             val item = items[key] ?: return@forEach
-            val selected = item == selected
+            val isSelected = item == selected
             Column(modifier = Modifier.padding(horizontal = 5.dp)) {
                 Surface(
-                    color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceContainer,
+                    color = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
                     modifier = Modifier.padding(horizontal = 0.dp),
                     shape = TOTAL_ROUNDED_SHAPE,
                     onClick = { onSelected(item) }
@@ -60,7 +61,7 @@ fun <T> TabBar(
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Normal,
                             textAlign = TextAlign.Center,
-                            color = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant.modify(
+                            color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant.modify(
                                 .5f
                             ),
                             modifier = Modifier
@@ -101,7 +102,7 @@ fun <T> MinimalTabBar(
                 Column(modifier = Modifier.padding(horizontal = 5.dp)) {
                     Surface(
                         shape = TOTAL_ROUNDED_SHAPE,
-                        color = _root_ide_package_.androidx.compose.ui.graphics.Color(0, 0, 0, 0),
+                        color = Color(0, 0, 0, 0),
                         modifier = Modifier.clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }) {

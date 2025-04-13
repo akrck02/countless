@@ -1,11 +1,11 @@
 package org.akrck02.countless.ui.view
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.History
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -26,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import countless.composeapp.generated.resources.Res
 import countless.composeapp.generated.resources.income_title
 import countless.composeapp.generated.resources.outcome_title
+import kotlinx.coroutines.launch
 import org.akrck02.countless.data.extension.asDate
 import org.akrck02.countless.data.extension.defaultDigitFormat
 import org.akrck02.countless.data.model.FinancialTransaction
@@ -48,6 +49,7 @@ import org.akrck02.countless.viewmodel.AppViewModel
 import org.akrck02.countless.viewmodel.WalletViewModel
 import org.jetbrains.compose.resources.stringResource
 import org.koin.androidx.compose.koinViewModel
+import java.text.DateFormat
 import java.util.Calendar
 import java.util.Locale
 
@@ -58,16 +60,26 @@ fun WalletView(
     viewModel: WalletViewModel = koinViewModel()
 ) {
 
-    val scheduleMode by remember { viewModel.scheduleMode }
-    val showNewTransaction by remember { viewModel.showNewTransaction }
-    val selectedTransactionType by remember { viewModel.selectedTransactionType }
-    val selectedPeriod by remember { viewModel.selectedPeriod }
-    val transactions: List<FinancialTransaction> by remember { viewModel.transactions }
-    val income by remember { viewModel.income }
-    val outcome by remember { viewModel.outcome }
+    viewModel.changeAccountId(appViewModel.currentAccount?.id ?: -1)
+    viewModel.changeFinancialGoalId(appViewModel.financialState?.financialGoal?.id ?: -1)
 
-    if (showNewTransaction) {
-        AddTransactionDialogue(scheduleMode) { viewModel.hideNewTransactionPanel() }
+    val transactions: List<FinancialTransaction> = viewModel.transactions
+    val income = viewModel.income
+    val outcome = viewModel.outcome
+    val coroutineScope = rememberCoroutineScope()
+
+    if (viewModel.showNewTransaction) {
+        AddTransactionDialogue(
+            onAcceptRequest = {
+                coroutineScope.launch {
+                    viewModel.addNewFinancialTransaction(it)
+                    viewModel.hideNewTransactionPanel()
+                    appViewModel.sync(1000)
+                }
+            },
+            onDismissRequest = { viewModel.hideNewTransactionPanel() }
+        )
+        return
     }
 
     Scaffold(
@@ -77,10 +89,8 @@ fun WalletView(
         floatingActionButtonPosition = FabPosition.Center,
         bottomBar = {
             MenuBar(
-                scheduleMode,
                 onNewTransactionSelected = { viewModel.showNewTransactionPanel() },
-                onScheduledSelected = { viewModel.toggleScheduleMode() },
-                onOptionSelected = { viewModel.setSelectedTransactionType(it) }
+                onOptionSelected = { viewModel.changeSelectedTransactionType(it) }
             )
         }
     ) {
@@ -96,9 +106,7 @@ fun WalletView(
 
 @Composable
 private fun MenuBar(
-    scheduledSelected: Boolean,
     onNewTransactionSelected: () -> Unit,
-    onScheduledSelected: () -> Unit,
     onOptionSelected: (TransactionType) -> Unit
 ) {
 
@@ -112,7 +120,8 @@ private fun MenuBar(
     ) {
         Surface(
             shape = RoundedCornerShape(100),
-            color = MaterialTheme.colorScheme.surfaceContainerLow,
+            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+            shadowElevation = 20.dp,
             modifier = Modifier.widthIn(0.dp, 380.dp)
         ) {
             var selected by remember { mutableStateOf(TransactionType.All) }
@@ -131,33 +140,13 @@ private fun MenuBar(
                 Surface(
                     color = Color.Transparent,
                     shape = RoundedCornerShape(100),
-                    modifier = Modifier.padding(start = 5.dp, end = 5.dp),
+                    modifier = Modifier.padding(start = 3.dp, end = 5.dp),
                     onClick = { onNewTransactionSelected() }
                 ) {
                     Icon(
                         tint = MaterialTheme.colorScheme.onSurface.modify(.5f),
                         contentDescription = "Add",
                         imageVector = Icons.Rounded.Add
-                    )
-                }
-
-                Surface(
-                    color = Color.Transparent,
-                    shape = RoundedCornerShape(100),
-                    modifier = Modifier
-                        .padding(start = 5.dp, end = 15.dp)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() },
-                            onClick = { onScheduledSelected() }
-                        )
-                ) {
-                    Icon(
-                        tint = if (scheduledSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.modify(
-                            .5f
-                        ),
-                        contentDescription = "History",
-                        imageVector = Icons.Rounded.History
                     )
                 }
             }
@@ -178,16 +167,20 @@ fun Payments(
         userScrollEnabled = true,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .padding(bottom = padding.calculateBottomPadding())
+            // .padding(bottom = padding.calculateBottomPadding())
             .fillMaxSize()
     ) {
         item {
+
+            val month = Calendar.getInstance()
+                .getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) ?: ""
+            val year = Calendar.getInstance().weekYear
+            val title = "$month $year"
             SectionTitle(
-                text = Calendar.getInstance()
-                    .getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) ?: "",
+                text = title,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 80.dp, bottom = 30.dp)
+                    .padding(top = 80.dp, bottom = 20.dp)
             )
 
             Row {
@@ -200,15 +193,20 @@ fun Payments(
                     "${outcome.defaultDigitFormat()}€"
                 )
             }
+            Spacer(Modifier.height(20.dp))
         }
 
         items(transactions) {
             TransactionCard(
                 name = it.name ?: "",
-                subLabel = it.timestamp.asDate(),
+                subLabel = it.timestamp.asDate(DateFormat.LONG),
                 value = "${it.value}€",
-                color = MaterialTheme.colorScheme.error
+                color = if (it.value < 0.0) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
             )
+        }
+
+        item {
+            Spacer(Modifier.height(100.dp))
         }
 
     }

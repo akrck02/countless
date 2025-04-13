@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "c787028e58afc5094fc779754d707724",
+    "identityHash": "f6c2c2590b3d131d2a517c7bb90f1e28",
     "entities": [
       {
         "tableName": "account",
@@ -35,7 +35,7 @@
       },
       {
         "tableName": "financial_goal",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `account_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `target_value` REAL NOT NULL DEFAULT 0, `current_value` REAL NOT NULL DEFAULT 0, `month_spend_limit` REAL NOT NULL DEFAULT 0, `month_savings` REAL NOT NULL DEFAULT 0, `target_timestamp` INTEGER, `estimated_timestamp` INTEGER, FOREIGN KEY(`account_id`) REFERENCES `account`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `account_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `target_value` REAL NOT NULL DEFAULT 0, `current_value` REAL NOT NULL DEFAULT 0, `month_spend_limit` REAL NOT NULL DEFAULT 0, `month_savings` REAL NOT NULL DEFAULT 0, `insert_timestamp` INTEGER, `target_timestamp` INTEGER, `estimated_timestamp` INTEGER, FOREIGN KEY(`account_id`) REFERENCES `account`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -82,6 +82,11 @@
             "affinity": "REAL",
             "notNull": true,
             "defaultValue": "0"
+          },
+          {
+            "fieldPath": "insertTimestamp",
+            "columnName": "insert_timestamp",
+            "affinity": "INTEGER"
           },
           {
             "fieldPath": "targetTimestamp",
@@ -369,7 +374,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c787028e58afc5094fc779754d707724')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f6c2c2590b3d131d2a517c7bb90f1e28')"
     ]
   }
 }

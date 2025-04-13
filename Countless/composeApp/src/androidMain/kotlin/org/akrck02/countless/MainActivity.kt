@@ -13,9 +13,11 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.compose.KoinContext
 import org.koin.core.component.KoinComponent
+import org.koin.core.context.stopKoin
 
 class MainActivity : FragmentActivity(), KoinComponent {
     @RequiresApi(Build.VERSION_CODES.R)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initKoin {
@@ -25,11 +27,12 @@ class MainActivity : FragmentActivity(), KoinComponent {
         }
 
         setContent {
-            KoinContext {
+
                 App()
-            }
+
         }
     }
+
 }
 
 @RequiresApi(Build.VERSION_CODES.R)

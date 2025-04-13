@@ -34,6 +34,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import countless.composeapp.generated.resources.Res
 import countless.composeapp.generated.resources.stats_ahead_of_budget_template
+import countless.composeapp.generated.resources.stats_behind_of_budget_template
+import countless.composeapp.generated.resources.stats_save_more_template
 import countless.composeapp.generated.resources.stats_savings_objective_title_template
 import countless.composeapp.generated.resources.stats_savings_title
 import countless.composeapp.generated.resources.stats_spend_more_template
@@ -82,7 +84,7 @@ fun StatsView(
 
             )
             Text(
-                text = "${appViewModel.currentFinancialGoal?.currentValue.defaultDigitFormat()}€",
+                text = "${appViewModel.financialState?.financialGoal?.currentValue.defaultDigitFormat()}€",
                 fontSize = 40.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onSurface,
@@ -92,7 +94,10 @@ fun StatsView(
                     .padding(bottom = 10.dp)
             )
             Text(
-                text = stringResource(Res.string.stats_savings_objective_title_template, "${appViewModel.currentFinancialGoal?.targetValue.defaultDigitFormat()}€"),
+                text = stringResource(
+                    Res.string.stats_savings_objective_title_template,
+                    "${appViewModel.financialState?.financialGoal?.targetValue.defaultDigitFormat()}€"
+                ),
                 fontSize = 25.sp,
                 fontWeight = FontWeight.W500,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.modify(.5f),
@@ -120,13 +125,21 @@ fun StatsView(
             )
 
             LaunchedEffect(LocalLifecycleOwner.current) {
-                progress = appViewModel.currentFinancialGoal?.getCurrentProgress()?.toFloat() ?: 0.0f
+                progress =
+                    appViewModel.financialState?.financialGoal?.getCurrentProgress()?.toFloat()
+                        ?: 0.0f
             }
 
             val budgetDifference = appViewModel.getBudgetDifference()
             Text(
-                text = if (budgetDifference > 0.0) stringResource(Res.string.stats_ahead_of_budget_template, "${budgetDifference.defaultDigitFormat()}€")
-                else stringResource(Res.string.stats_ahead_of_budget_template, "${abs(budgetDifference).defaultDigitFormat()}€"),
+                text = if (budgetDifference > 0.0) stringResource(
+                    Res.string.stats_ahead_of_budget_template,
+                    "${budgetDifference.defaultDigitFormat()}€"
+                )
+                else stringResource(
+                    Res.string.stats_behind_of_budget_template,
+                    "${abs(budgetDifference).defaultDigitFormat()}€"
+                ),
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Normal,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.modify(.5f),
@@ -136,13 +149,16 @@ fun StatsView(
                     .padding(bottom = 10.dp)
             )
 
-            val budgetExcess = appViewModel.getMonthBudgetExcess()
+            val monthBudgetDifference = appViewModel.getMonthBudgetDifference()
 
             Text(
-                text = if (budgetExcess > 0.0) stringResource(
+                text = if (monthBudgetDifference > 0.0) stringResource(
                     Res.string.stats_spend_more_template,
-                    "${budgetExcess.defaultDigitFormat()}€"
-                ) else stringResource(Res.string.stats_spend_more_template, "${budgetExcess.defaultDigitFormat()}€"),
+                    "${monthBudgetDifference.defaultDigitFormat()}€"
+                ) else stringResource(
+                    Res.string.stats_save_more_template,
+                    "${abs(monthBudgetDifference).defaultDigitFormat()}€"
+                ),
                 fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center,
@@ -178,7 +194,9 @@ fun StatsView(
                         Text(
                             text = "${
                                 if (estimatedTimestamp != 0L) estimatedTimestamp.asDate(DateFormat.LONG)
-                                else appViewModel.currentFinancialGoal?.targetTimestamp.asDate(DateFormat.LONG)
+                                else appViewModel.financialState?.financialGoal?.targetTimestamp.asDate(
+                                    DateFormat.LONG
+                                )
                             }.",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Normal,

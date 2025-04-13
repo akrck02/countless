@@ -25,7 +25,7 @@ fun MinimalInfoCard(label: String, value: String) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .padding(5.dp)
-            .width(150.dp)
+            .width(170.dp)
     ) {
         Surface(
             color = MaterialTheme.colorScheme.surfaceContainer,

@@ -5,40 +5,35 @@ package org.akrck02.countless.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import kotlinx.serialization.InternalSerializationApi
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.serializer
 import org.akrck02.countless.data.model.option.Direction
 import org.akrck02.countless.viewmodel.AppViewModel
-import java.util.Objects
-
-class Routes
-
-@Serializable
-open class Route
-
-var current: Route? = null
+import java.util.LinkedList
 
 // ROUTES
 @Serializable
-data object StatsRoute : Route() {
-    lateinit var appViewModel: AppViewModel
-}
+@SerialName("")
+open class Route
+
+@OptIn(InternalSerializationApi::class)
+fun Route.serialName() = this::class.serializer().descriptor.serialName
 
 @Serializable
-data object WalletRoute : Route() {
-    lateinit var appViewModel: AppViewModel
-}
+@SerialName("/stats")
+object StatsRoute : Route()
 
 @Serializable
-data object ScheduleRoute : Route() {
-    lateinit var appViewModel: AppViewModel
-}
+@SerialName("/wallet")
+object WalletRoute : Route()
 
 @Serializable
-data object GoalsRoute : Route() {
-    lateinit var appViewModel: AppViewModel
-}
+@SerialName("/goals")
+object GoalsRoute : Route()
 
-val availableRoutes = listOf(StatsRoute.getRoutePackageName(), WalletRoute.getRoutePackageName(), ScheduleRoute.getRoutePackageName(), GoalsRoute.getRoutePackageName())
+val availableRoutes = LinkedList(mutableListOf(StatsRoute, WalletRoute, GoalsRoute)).map { it.serialName() }
 
 /**
  * Get the animation direction for path
@@ -47,29 +42,19 @@ fun getNavigationAnimationDirection(initialPath: String, targetPath: String): Di
     return if (availableRoutes.indexOf(initialPath) < availableRoutes.indexOf(targetPath)) Direction.LEFT else Direction.RIGHT
 }
 
-@Composable
-fun NavHostController.getCurrentRoute(): String? {
-    return this.currentBackStackEntryAsState().value?.destination?.route
-}
-
-
 /**
  * Navigate to a route skipping current one
  */
-fun NavHostController.navigateSecurely(route: Route) {
+fun NavHostController.navigateSecurely(route: Route, appViewModel: AppViewModel) {
 
-    val currentRoutePackage = current?.getRoutePackageName()
-    if (Objects.equals(route.getRoutePackageName(), currentRoutePackage))
+    if (route.serialName() == this.currentBackStackEntry?.destination?.route)
         return
 
-    current = route
+    appViewModel.currentRoute = route
     this.navigate(route)
 }
 
-
-/**
- * Get the package name of a Route object
- */
-fun Route.getRoutePackageName(): String {
-    return this.javaClass.kotlin.qualifiedName.toString()
+@Composable
+fun NavHostController.getCurrentRoute(): String? {
+    return this.currentBackStackEntryAsState().value?.destination?.route
 }

@@ -50,7 +50,7 @@ fun GoalsView(
                 .padding(top = 80.dp, bottom = 30.dp)
         )
 
-        appViewModel.currentFinancialGoal?.also {
+        appViewModel.financialState?.financialGoal?.also {
             FinancialGoalCard(it)
         }
     }

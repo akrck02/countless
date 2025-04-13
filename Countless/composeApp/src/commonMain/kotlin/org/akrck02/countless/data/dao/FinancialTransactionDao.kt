@@ -15,13 +15,13 @@ interface FinancialTransactionDao {
     @Query("SELECT * FROM financial_transaction WHERE id = :transactionId")
     suspend fun find(transactionId: Int): FinancialTransactionEntity
 
-    @Query("SELECT * FROM financial_transaction WHERE account_id = :accountId")
+    @Query("SELECT * FROM financial_transaction WHERE account_id = :accountId ORDER BY timestamp DESC")
     suspend fun findByAccount(accountId: Int): List<FinancialTransactionEntity>
 
-    @Query("SELECT * FROM financial_transaction WHERE account_id = :accountId AND value > 0")
+    @Query("SELECT * FROM financial_transaction WHERE account_id = :accountId AND value > 0 ORDER BY timestamp DESC")
     suspend fun findSavingsByAccount(accountId: Int): MutableList<FinancialTransactionEntity>
 
-    @Query("SELECT * FROM financial_transaction WHERE account_id = :accountId AND value < 0")
+    @Query("SELECT * FROM financial_transaction WHERE account_id = :accountId AND value < 0 ORDER BY timestamp DESC")
     suspend fun findExpensesByAccount(accountId: Int): MutableList<FinancialTransactionEntity>
 
     @Update

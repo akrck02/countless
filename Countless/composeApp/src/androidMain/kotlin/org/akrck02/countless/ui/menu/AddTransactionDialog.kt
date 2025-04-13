@@ -33,11 +33,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import org.akrck02.countless.data.model.FinancialTransaction
 import org.akrck02.countless.ui.component.MaterialDatePicker
 import org.akrck02.countless.ui.component.MaterialTextField
 
 @Composable
-fun AddTransactionDialogue(scheduledSelected: Boolean, onDismissRequest: () -> Unit) {
+fun AddTransactionDialogue(
+    onAcceptRequest: (FinancialTransaction) -> Unit,
+    onDismissRequest: () -> Unit
+) {
 
     var name by remember { mutableStateOf("") }
     var value by remember { mutableStateOf("") }
@@ -107,7 +111,15 @@ fun AddTransactionDialogue(scheduledSelected: Boolean, onDismissRequest: () -> U
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Button(onClick = onDismissRequest) { Text("Accept") }
+                    Button(onClick = {
+                        onAcceptRequest(
+                            FinancialTransaction(
+                                name = name,
+                                timestamp = date,
+                                value = value.toDoubleOrNull() ?: 0.0
+                            )
+                        )
+                    }) { Text("Accept") }
                     Spacer(Modifier.width(15.dp))
                     Button(
                         onClick = onDismissRequest, colors = ButtonColors(
