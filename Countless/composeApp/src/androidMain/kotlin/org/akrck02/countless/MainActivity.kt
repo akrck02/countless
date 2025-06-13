@@ -3,6 +3,7 @@ package org.akrck02.countless
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,8 +28,9 @@ class MainActivity : FragmentActivity(), KoinComponent {
         }
 
         setContent {
+            enableEdgeToEdge()
 
-                App()
+            App()
 
         }
     }
