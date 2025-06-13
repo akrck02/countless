@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -72,7 +73,7 @@ fun BottomNavigationBar(appViewModel: AppViewModel) {
 
     //scaffold to hold our bottom navigation Bar
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().navigationBarsPadding(),
         containerColor = MaterialTheme.colorScheme.background,
         floatingActionButton = {},
         floatingActionButtonPosition = FabPosition.Center,
@@ -81,17 +82,17 @@ fun BottomNavigationBar(appViewModel: AppViewModel) {
                 color = MaterialTheme.colorScheme.surfaceContainerLow,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(100.dp)
             ) {
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.padding(
                         PaddingValues(
-                            start = 10.dp,
-                            end = 10.dp,
-                            bottom = 20.dp
+                            start = 20.dp,
+                            end = 20.dp,
+                            top = 10.dp,
+                            bottom = 10.dp
                         )
                     )
                 ) {
@@ -176,8 +177,6 @@ private fun BottomNavigationBarOption(
 
     Surface(
         color = color,
-        modifier = Modifier
-            .size(74.dp),
         shape = DEFAULT_ROUNDED_SHAPE
     ) {
         Column(
