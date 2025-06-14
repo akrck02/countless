@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.NavigateNext
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -60,7 +59,6 @@ object PreparingAppStep : Step()
 
 var steps = listOf<Route>(WelcomeStepRoute, CreateAccountStep, GoalFormStep, GoalLimitsStep, PreparingAppStep)
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun TutorialView(appViewModel: AppViewModel, tutorialViewModel: TutorialViewModel = koinViewModel(), onFinish: () -> Unit) {
 
@@ -84,7 +82,7 @@ fun TutorialView(appViewModel: AppViewModel, tutorialViewModel: TutorialViewMode
                     ),
                     modifier = Modifier.size(50.dp),
                     onClick = {
-                        step = navController.navigateToNextTutorialStep(step)
+                        step = navController.navigateToNextTutorialStep(step, appViewModel)
                         Log.d("Countless-navigation", "$tutorialViewModel")
                     }
                 ) {
@@ -123,11 +121,11 @@ fun TutorialView(appViewModel: AppViewModel, tutorialViewModel: TutorialViewMode
     }
 }
 
-private fun NavHostController.navigateToNextTutorialStep(step: Int): Int {
+private fun NavHostController.navigateToNextTutorialStep(step: Int, appViewModel: AppViewModel): Int {
 
 
     if (steps.size > step) {
-        this.navigateSecurely(steps[step + 1])
+        this.navigateSecurely(steps[step + 1], appViewModel)
         return step + 1
     }
 

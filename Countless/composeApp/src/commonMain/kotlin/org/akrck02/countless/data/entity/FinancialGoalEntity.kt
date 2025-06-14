@@ -28,6 +28,7 @@ data class FinancialGoalEntity(
     @ColumnInfo(name = "current_value", defaultValue = "0") var currentValue: Double = 0.0,
     @ColumnInfo(name = "month_spend_limit", defaultValue = "0") var monthSpendLimit: Double = 0.0,
     @ColumnInfo(name = "month_savings", defaultValue = "0") var monthSavings: Double = 0.0,
+    @ColumnInfo(name = "insert_timestamp") var insertTimestamp: Long? = null,
     @ColumnInfo(name = "target_timestamp") var targetTimestamp: Long? = null,
     @ColumnInfo(name = "estimated_timestamp") var estimatedTimestamp: Long? = null
 )
@@ -40,6 +41,7 @@ fun FinancialGoalEntity.toModel() = FinancialGoal(
     currentValue = currentValue,
     monthSpendLimit = monthSpendLimit,
     monthSavings = monthSavings,
+    insertTimestamp = insertTimestamp,
     targetTimestamp = targetTimestamp,
     estimatedTimestamp = estimatedTimestamp
 )
@@ -58,6 +60,7 @@ fun FinancialGoal.toEntity(): FinancialGoalEntity {
         currentValue = currentValue,
         monthSpendLimit = monthSpendLimit,
         monthSavings = monthSavings,
+        insertTimestamp = insertTimestamp,
         targetTimestamp = targetTimestamp,
         estimatedTimestamp = estimatedTimestamp
     )

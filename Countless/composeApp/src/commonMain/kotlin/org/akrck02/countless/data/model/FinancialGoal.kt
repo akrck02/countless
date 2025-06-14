@@ -12,14 +12,15 @@ data class FinancialGoal(
     var currentValue: Double = 0.0,
     var monthSpendLimit: Double = 0.0,
     var monthSavings: Double = 0.0,
+    var insertTimestamp: Long? = null,
     var targetTimestamp: Long? = null,
     var estimatedTimestamp: Long? = null
 )
 
 
 fun FinancialGoal.getCurrentProgress(): Double {
-    var initial = currentValue
-    var target = targetValue
+    val initial = currentValue
+    val target = targetValue
 
     if (target == 0.0) return 0.0
 

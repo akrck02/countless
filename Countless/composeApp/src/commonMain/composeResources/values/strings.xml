@@ -7,9 +7,9 @@
     <string name="biometrics_subtitle">Please enter your fingerprint to access.</string>
 
     <string name="stats_option">Stats</string>
-    <string name="wallet_option">Wallet</string>
-    <string name="schedule_option">Schedules</string>
+    <string name="wallet_option">Payments</string>
     <string name="goals_option">Goal</string>
+    <string name="configuration_option">Settings</string>
     <string name="year_selector_option">Year</string>
     <string name="month_selector_option">Month</string>
     <string name="schedule_title_template">%1$s schedule</string>
@@ -26,6 +26,7 @@
     <string name="stats_ahead_of_budget_template">%1$s ahead of budget.</string>
     <string name="stats_behind_of_budget_template">%1$s behind budget.</string>
     <string name="stats_spend_more_template">You can spend %1$s more this month.</string>
+    <string name="stats_save_more_template">You must save %1$s more this month.</string>
 
     <!-- FINANCIAL GOALS VIEW -->
     <string name="financial_goal_current_goal">Current goal</string>

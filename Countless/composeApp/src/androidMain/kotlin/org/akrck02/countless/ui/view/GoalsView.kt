@@ -4,7 +4,6 @@ package org.akrck02.countless.ui.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,7 +23,6 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.androidx.compose.koinViewModel
 
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun GoalsView(
     appViewModel: AppViewModel,
@@ -52,7 +50,7 @@ fun GoalsView(
                 .padding(top = 80.dp, bottom = 30.dp)
         )
 
-        appViewModel.currentFinancialGoal?.also {
+        appViewModel.financialState?.financialGoal?.also {
             FinancialGoalCard(it)
         }
     }

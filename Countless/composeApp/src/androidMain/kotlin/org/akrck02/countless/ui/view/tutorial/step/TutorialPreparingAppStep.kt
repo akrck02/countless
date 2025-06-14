@@ -33,7 +33,11 @@ import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun PreparingAppStep(appViewModel: AppViewModel, tutorialViewModel: TutorialViewModel, onFinish: () -> Unit) {
+fun PreparingAppStep(
+    appViewModel: AppViewModel,
+    tutorialViewModel: TutorialViewModel,
+    onFinish: () -> Unit
+) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -61,9 +65,6 @@ fun PreparingAppStep(appViewModel: AppViewModel, tutorialViewModel: TutorialView
 
         LoadingIndicator()
 
-
-
-
         if (setupDone) {
             onFinish()
         }
@@ -71,11 +72,13 @@ fun PreparingAppStep(appViewModel: AppViewModel, tutorialViewModel: TutorialView
         LaunchedEffect(LocalLifecycleOwner.current) {
 
             delay(1000)
-            appViewModel.createFirstAccountAndGoal(tutorialViewModel.account, tutorialViewModel.financialGoal) {
+            appViewModel.createFirstAccountAndGoal(
+                tutorialViewModel.account,
+                tutorialViewModel.financialGoal
+            ) {
                 setupDone = true
             }
 
         }
-
     }
 }

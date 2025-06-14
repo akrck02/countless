@@ -31,6 +31,7 @@ class FinancialGoalRepository(
     }
 
     suspend fun create(financialGoal: FinancialGoal) {
+        financialGoal.insertTimestamp = System.currentTimeMillis()
         financialGoalDao.create(financialGoal.toEntity())
     }
 

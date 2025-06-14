@@ -7,9 +7,9 @@
     <string name="biometrics_subtitle">Por favor introduzca su huella para acceder.</string>
 
     <string name="stats_option">Estadisticas</string>
-    <string name="wallet_option">Cartera</string>
-    <string name="schedule_option">Planes</string>
+    <string name="wallet_option">Pagos</string>
     <string name="goals_option">Objetivo</string>
+    <string name="configuration_option">Ajustes</string>
     <string name="year_selector_option">Año</string>
     <string name="month_selector_option">Mes</string>
     <string name="schedule_title_template">Programación del %1$s</string>
@@ -25,7 +25,8 @@
     <string name="stats_savings_objective_title_template">de %1$s</string>
     <string name="stats_ahead_of_budget_template">%1$s por encima del presupuesto.</string>
     <string name="stats_behind_of_budget_template">%1$s por debajo del presupuesto.</string>
-    <string name="stats_spend_more_template">Puedes gastar %1$s mas este mes.</string>
+    <string name="stats_spend_more_template">Puedes gastar %1$s más este mes.</string>
+    <string name="stats_save_more_template">Debes ahorrar %1$s más este mes.</string>
 
     <!-- FINANCIAL GOALS VIEW -->
     <string name="financial_goal_current_goal">Objetivo actual</string>

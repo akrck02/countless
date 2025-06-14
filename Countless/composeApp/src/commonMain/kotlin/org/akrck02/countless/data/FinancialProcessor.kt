@@ -1,50 +1,98 @@
 package org.akrck02.countless.data
 
+
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
+import org.akrck02.countless.data.extension.daysBetween
+import org.akrck02.countless.data.extension.endOfMonth
+import org.akrck02.countless.data.extension.toLocalDateTime
 import org.akrck02.countless.data.model.FinancialGoal
+import org.akrck02.countless.data.model.FinancialState
+import org.akrck02.countless.data.model.FinancialTransaction
+import org.akrck02.countless.data.repository.FinancialGoalRepository
+import org.akrck02.countless.data.repository.TransactionRepository
 import java.sql.Timestamp
+import java.time.LocalDateTime
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
-class FinancialProcessor {
 
-    var yearIncome: Double = 0.0
-    var monthIncome: Double = 0.0
+class FinancialProcessor(
+    private val financialGoalRepository: FinancialGoalRepository,
+    private val transactionRepository: TransactionRepository
+) {
 
-    var yearOutcome: Double = 0.0
-    var monthOutcome: Double = 0.0
+    @RequiresApi(Build.VERSION_CODES.O)
+    suspend fun sync(financialState: FinancialState) {
 
-    var estimatedTimestamp: Long = 0L
-    var estimatedBudgetForToday: Double = 0.0
-    var estimatedBudgetForMonth: Double = 0.0
+        financialState.financialGoal ?: return
 
-    fun sync() {
-        closeScheduledTransactions()
-        updateIncomes()
-        updateOutComes()
-        updateEstimatedTimes()
-        updateEstimatedBudget()
+        val savings = transactionRepository.findSavingsByAccountId(financialState.financialGoal!!.accountId!!)
+        val expenses = transactionRepository.findExpensesByAccountId(financialState.financialGoal!!.accountId!!)
+
+        val targetDateTime = financialState.financialGoal?.targetTimestamp?.toLocalDateTime() ?: return
+        val insertDateTime = financialState.financialGoal?.insertTimestamp?.toLocalDateTime() ?: return
+
+        val daysUntilTargetDate = max(insertDateTime.daysBetween(targetDateTime), 0)
+        val perDayTargetSavings = financialState.financialGoal!!.targetValue / daysUntilTargetDate
+
+        val daysUntilToday = max(insertDateTime.daysBetween(LocalDateTime.now()), 0)
+        val daysUntilMonthFinish = max(insertDateTime.daysBetween(LocalDateTime.now().endOfMonth()), 0)
+
+        Log.d("TAG", "days until target date: $daysUntilTargetDate")
+        Log.d("TAG", "days until today: $daysUntilToday")
+        Log.d("TAG", "days until month finish: $daysUntilMonthFinish")
+        Log.d("TAG", "per day savings: $perDayTargetSavings")
+
+        closeScheduledTransactions(financialState)
+        syncCurrentValue(financialState, savings, expenses)
+        syncEstimatedTimes(financialState)
+        syncEstimatedBudget(financialState, perDayTargetSavings, daysUntilToday, daysUntilMonthFinish)
     }
 
-    fun closeScheduledTransactions() {
+    /**
+     * Generate scheduled transactions until today
+     */
+    private fun closeScheduledTransactions(financialState: FinancialState) {
 
     }
 
-    fun updateIncomes() {
+    /**
+     * Calculate and sync current financial goal value
+     */
+    private fun syncCurrentValue(financialState: FinancialState, savings: List<FinancialTransaction>, expenses: List<FinancialTransaction>) {
+        financialState.financialGoal?.apply {
+            currentValue = savings.sumOf { it.value } - expenses.sumOf { abs(it.value) }
+        }
+    }
+
+    /**
+     * Calculate and synchronize the estimated times
+     */
+    private fun syncEstimatedTimes(financialState: FinancialState) {
 
     }
 
-    fun updateOutComes() {
+    /**
+     * Calculate and synchronize the estimated budget
+     */
+    private fun syncEstimatedBudget(financialState: FinancialState, perDayTargetSavings: Double, daysUntilToday: Long, daysUntilMonthFinish: Long) {
+
+        financialState.estimatedBudgetForToday = min(daysUntilToday * perDayTargetSavings, financialState.financialGoal?.targetValue ?: 0.0)
+        financialState.estimatedBudgetForThisMonth = min(daysUntilMonthFinish * perDayTargetSavings, financialState.financialGoal?.targetValue ?: 0.0)
+
+        Log.d("TAG", "syncEstimatedBudget: ")
+        Log.d("TAG", "syncEstimatedBudget: day ${financialState.estimatedBudgetForToday}")
+        Log.d("TAG", "syncEstimatedBudget: month ${financialState.estimatedBudgetForThisMonth}")
 
     }
 
-    fun updateEstimatedTimes() {
-
-    }
-
-    fun updateEstimatedBudget() {
-
-    }
-
-
-    fun targetForDay(financialGoal: FinancialGoal, timestamp: Long): Double {
+    /**
+     * Get the budget target for a given timestamp
+     */
+    private fun targetForDay(financialGoal: FinancialGoal, timestamp: Long): Double {
 
         // 1. Get all the days between goal start and goal end
 
@@ -55,7 +103,10 @@ class FinancialProcessor {
         return 0.0
     }
 
-    fun getBudgetDifferenceForTime(financialGoal: FinancialGoal, timestamp: Long): Double {
+    /**
+     * Get the budget difference for a given timestamp
+     */
+    private fun getBudgetDifferenceForTime(financialGoal: FinancialGoal, timestamp: Long): Double {
 
         // 1. Get the target for the given day
 
@@ -66,7 +117,10 @@ class FinancialProcessor {
         return 0.0
     }
 
-    fun scheduledIncomeBetween(
+    /**
+     * Get the income coming by scheduled transactions between two timestamps
+     */
+    private fun scheduledIncomeBetween(
         startTimestamp: Long,
         endTimestamp: Timestamp,
         includePast: Boolean = false
@@ -79,7 +133,10 @@ class FinancialProcessor {
         return 0.0
     }
 
-    fun scheduledOutcomeBetween(
+    /**
+     * Get the outcome coming by scheduled transactions between two timestamps
+     */
+    private fun scheduledOutcomeBetween(
         startTimestamp: Long,
         endTimestamp: Timestamp,
         includePast: Boolean = false
@@ -92,7 +149,10 @@ class FinancialProcessor {
         return 0.0
     }
 
-    fun incomeBetween(startTimestamp: Long, endTimestamp: Timestamp): Double {
+    /**
+     * Get income between two timestamps
+     */
+    private fun incomeBetween(startTimestamp: Long, endTimestamp: Timestamp): Double {
 
         // 1. Get all the past income transactions since startTimestamp
         val income = 0.0
@@ -104,7 +164,10 @@ class FinancialProcessor {
         return income + pendingIncome
     }
 
-    fun outcomeBetween(startTimestamp: Long, endTimestamp: Timestamp): Double {
+    /**
+     * Get the outcome between two timestamps
+     */
+    private fun outcomeBetween(startTimestamp: Long, endTimestamp: Timestamp): Double {
 
         // 1. Get all the past outcome transactions since startTimestamp
         val outcome = 0.0
@@ -116,7 +179,11 @@ class FinancialProcessor {
         return outcome + pendingOutcome
     }
 
-    fun estimatedTimeForGoal(financialGoal: FinancialGoal): Long {
+    /**
+     * Calculate and process the estimated time to reach
+     * the current financial goal
+     */
+    private fun estimatedTimeForGoal(financialGoal: FinancialGoal): Long {
 
         // 1. get historical savings since goal start
 
@@ -128,5 +195,4 @@ class FinancialProcessor {
 
         return 0L
     }
-
 }

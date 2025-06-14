@@ -11,7 +11,6 @@ import org.akrck02.countless.data.repository.ScheduleRepository
 import org.akrck02.countless.data.repository.TransactionRepository
 import org.akrck02.countless.viewmodel.AppViewModel
 import org.akrck02.countless.viewmodel.GoalsViewModel
-import org.akrck02.countless.viewmodel.ScheduleViewModel
 import org.akrck02.countless.viewmodel.StatsViewModel
 import org.akrck02.countless.viewmodel.TutorialViewModel
 import org.akrck02.countless.viewmodel.WalletViewModel
@@ -69,10 +68,10 @@ val provideDatabaseModule = module {
 
 // Add viewmodel classes here to be loaded inside the database module.
 val appModule = module {
+    viewModelOf(::TutorialViewModel)
     viewModelOf(::AppViewModel)
     viewModelOf(::StatsViewModel)
     viewModelOf(::WalletViewModel)
-    viewModelOf(::ScheduleViewModel)
     viewModelOf(::GoalsViewModel)
-    viewModelOf(::TutorialViewModel)
+
 }
